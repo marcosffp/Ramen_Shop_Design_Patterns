@@ -8,9 +8,20 @@ public class PedidoGrande implements Pedido {
   private String proteina;
   private int numeroPedido;
   private static int contador = 1;
+  private String nomeCliente;
 
-  public PedidoGrande(String proteina) {
+  @Override
+  public String getNomeCliente() {
+    return nomeCliente;
+  }
+
+  public void setNomeCliente(String nomeCliente) {
+    this.nomeCliente = nomeCliente;
+  }
+
+  public PedidoGrande(String proteina, String nomeCliente) {
     this.proteina = proteina;
+    this.nomeCliente = nomeCliente;
     this.numeroPedido = contador++;
   }
 

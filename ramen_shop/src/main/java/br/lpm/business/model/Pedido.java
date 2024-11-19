@@ -7,5 +7,8 @@ public interface Pedido {
 
   public double getPrecoTotal();
   
-  public int getNumeroPedido(); 
+  public int getNumeroPedido();
+  
+  public String getNomeCliente();
+
 }

@@ -10,6 +10,11 @@ public abstract class AcrescimoDecorator implements Pedido {
   }
 
   @Override
+  public String getNomeCliente() {
+    return pedido.getNomeCliente();
+  }
+
+  @Override
   public void exibirDetalhes() {
     pedido.exibirDetalhes();
   }

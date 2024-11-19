@@ -5,6 +5,11 @@ import br.lpm.business.model.Pedido;
 public abstract class BebidaDecorator implements Pedido {
   private final Pedido pedido;
 
+  @Override
+  public String getNomeCliente() {
+    return pedido.getNomeCliente();
+  }
+
   public BebidaDecorator(Pedido pedido) {
     this.pedido = pedido;
   }

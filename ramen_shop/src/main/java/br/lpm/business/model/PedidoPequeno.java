@@ -5,12 +5,24 @@ public class PedidoPequeno implements Pedido {
   private static final double PRECO_VEGANO = 3.90;
   private static final double PRECO_BOI = 7.90;
   private static final double PRECO_PORCO = 5.90;
+  private String nomeCliente;
+
+  @Override
+  public String getNomeCliente() {
+    return nomeCliente;
+  }
+
+  public void setNomeCliente(String nomeCliente) {
+    this.nomeCliente = nomeCliente;
+  }
+
   private String proteina;
   private int numeroPedido;
   private static int contador = 1;
 
-  public PedidoPequeno(String proteina) {
+  public PedidoPequeno(String proteina, String nomeCliente) {
     this.proteina = proteina;
+    this.nomeCliente = nomeCliente;
     this.numeroPedido = contador++;
   }
 
