@@ -1,4 +1,4 @@
-package br.lpm.business.pedido;
+package br.lpm.business.model;
 
 public class PedidoMedio implements Pedido {
   private static final double PRECO_BASE = 12.90;
@@ -6,9 +6,12 @@ public class PedidoMedio implements Pedido {
   private static final double PRECO_BOI = 7.90;
   private static final double PRECO_PORCO = 5.90;
   private String proteina;
+  private int numeroPedido;
+  private static int contador = 1;
 
   public PedidoMedio(String proteina) {
     this.proteina = proteina;
+    this.numeroPedido = contador++;
   }
 
   @Override
@@ -31,5 +34,19 @@ public class PedidoMedio implements Pedido {
   @Override
   public double getPrecoTotal() {
     return calcularTotal();
+  }
+
+
+  public String getProteina() {
+    return proteina;
+  }
+
+  public void setProteina(String proteina) {
+    this.proteina = proteina;
+  }
+
+  @Override
+  public int getNumeroPedido() {
+    return numeroPedido;
   }
 }

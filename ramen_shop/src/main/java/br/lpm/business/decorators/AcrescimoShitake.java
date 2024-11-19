@@ -1,6 +1,6 @@
-package br.lpm.business.acrescimos;
+package br.lpm.business.decorators;
 
-import br.lpm.business.pedido.Pedido;
+import br.lpm.business.model.Pedido;
 
 public class AcrescimoShitake extends AcrescimoDecorator {
   private static final double PRECO_SHITAKE = 6.90;

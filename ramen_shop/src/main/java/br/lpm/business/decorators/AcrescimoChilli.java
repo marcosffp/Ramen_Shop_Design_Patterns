@@ -1,6 +1,6 @@
-package br.lpm.business.acrescimos;
+package br.lpm.business.decorators;
 
-import br.lpm.business.pedido.Pedido;
+import br.lpm.business.model.Pedido;
 
 public class AcrescimoChilli extends AcrescimoDecorator {
   private static final double PRECO_CHILLI = 2.50;

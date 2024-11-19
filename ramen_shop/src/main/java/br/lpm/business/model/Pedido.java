@@ -1,4 +1,4 @@
-package br.lpm.business.pedido;
+package br.lpm.business.model;
 
 public interface Pedido {
   public void exibirDetalhes();
@@ -6,4 +6,6 @@ public interface Pedido {
   public double calcularTotal();
 
   public double getPrecoTotal();
+  
+  public int getNumeroPedido(); 
 }

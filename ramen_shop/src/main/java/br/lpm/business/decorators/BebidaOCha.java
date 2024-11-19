@@ -1,6 +1,6 @@
-package br.lpm.business.bebidas;
+package br.lpm.business.decorators;
 
-import br.lpm.business.pedido.Pedido;
+import br.lpm.business.model.Pedido;
 
 public class BebidaOCha extends BebidaDecorator {
   private static final double PRECO_KOCHA = 3.90;

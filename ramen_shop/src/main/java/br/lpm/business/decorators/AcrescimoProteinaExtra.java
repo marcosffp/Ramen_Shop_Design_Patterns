@@ -1,6 +1,6 @@
-package br.lpm.business.acrescimos;
+package br.lpm.business.decorators;
 
-import br.lpm.business.pedido.Pedido;
+import br.lpm.business.model.Pedido;
 
 public class AcrescimoProteinaExtra extends AcrescimoDecorator {
   private static final double PRECO_PROTEINA_EXTRA = 4.00;
@@ -16,6 +16,8 @@ public class AcrescimoProteinaExtra extends AcrescimoDecorator {
 
   @Override
   public double calcularTotal() {
-    return super.calcularTotal() + PRECO_PROTEINA_EXTRA; 
+    return super.calcularTotal() + PRECO_PROTEINA_EXTRA;
   }
+  
+
 }

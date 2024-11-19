@@ -1,19 +1,26 @@
-package br.lpm.business.pedido;
+package br.lpm.business.model;
 
-public class PedidoGrande implements Pedido {
-  private static final double PRECO_BASE = 15.90;
+public class PedidoPequeno implements Pedido {
+  private static final double PRECO_BASE = 9.90;
   private static final double PRECO_VEGANO = 3.90;
   private static final double PRECO_BOI = 7.90;
   private static final double PRECO_PORCO = 5.90;
   private String proteina;
+  private int numeroPedido;
+  private static int contador = 1;
 
-  public PedidoGrande(String proteina) {
+  public PedidoPequeno(String proteina) {
     this.proteina = proteina;
+    this.numeroPedido = contador++;
+  }
+
+  public int getNumeroPedido() {
+    return numeroPedido;
   }
 
   @Override
   public void exibirDetalhes() {
-    System.out.println("Pedido Grande com proteína: " + proteina);
+    System.out.println("Pedido Pequeno com proteina: " + proteina);
   }
 
   @Override
@@ -32,4 +39,10 @@ public class PedidoGrande implements Pedido {
   public double getPrecoTotal() {
     return calcularTotal();
   }
+
+  public String getProteina() {
+    return proteina;
+  }
+
+
 }

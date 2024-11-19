@@ -1,11 +1,11 @@
-package br.lpm.business.bebidas;
+package br.lpm.business.decorators;
 
-import br.lpm.business.pedido.Pedido;
+import br.lpm.business.model.Pedido;
 
-public abstract class BebidaDecorator implements Pedido {
+public abstract class AcrescimoDecorator implements Pedido {
   private final Pedido pedido;
 
-  public BebidaDecorator(Pedido pedido) {
+  public AcrescimoDecorator(Pedido pedido) {
     this.pedido = pedido;
   }
 
@@ -22,5 +22,10 @@ public abstract class BebidaDecorator implements Pedido {
   @Override
   public double calcularTotal() {
     return pedido.calcularTotal();
+  }
+
+  @Override
+  public int getNumeroPedido() {
+    return pedido.getNumeroPedido();
   }
 }
