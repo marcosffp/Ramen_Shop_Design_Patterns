@@ -24,13 +24,14 @@ public abstract class BebidaDecorator implements Pedido {
     return pedido.getPrecoTotal();
   }
 
-  @Override
-  public double calcularTotal() {
-    return pedido.calcularTotal();
-  }
 
   @Override
   public int getNumeroPedido() {
     return pedido.getNumeroPedido();
+  }
+
+  @Override
+  public String getSenhaCliente() {
+    return pedido.getSenhaCliente();
   }
 }

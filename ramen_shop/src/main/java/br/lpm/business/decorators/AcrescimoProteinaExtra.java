@@ -14,10 +14,11 @@ public class AcrescimoProteinaExtra extends AcrescimoDecorator {
     System.out.println("Com acréscimo de proteína extra.");
   }
 
-  @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_PROTEINA_EXTRA;
-  }
   
+
+  @Override
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_PROTEINA_EXTRA;
+  }
 
 }

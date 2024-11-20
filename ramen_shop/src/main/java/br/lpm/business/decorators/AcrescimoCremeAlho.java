@@ -15,8 +15,9 @@ public class AcrescimoCremeAlho extends AcrescimoDecorator {
     System.out.println("Com acréscimo de Creme de Alho.");
   }
 
+
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_CREME_ALHO;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_CREME_ALHO;
   }
 }

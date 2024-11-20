@@ -14,8 +14,9 @@ public class BebidaKoCha extends BebidaDecorator {
     System.out.println("Com a bebida Ko-Cha.");
   }
 
+
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_KOCHA;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_KOCHA;
   }
 }

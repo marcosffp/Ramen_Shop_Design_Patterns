@@ -15,8 +15,8 @@ public class BebidaOCha extends BebidaDecorator {
   }
 
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_KOCHA;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_KOCHA;
   }
   
 }

@@ -1,20 +1,21 @@
-package br.lpm.business.model;
+package br.lpm.business.observer;
 
-import br.lpm.business.utils.Observer;
-import br.lpm.business.utils.Subject;
+import br.lpm.business.model.Pedido;
 
 public class ClienteObserver extends Observer {
   private String nomeCliente;
+  private String senhaCliente;
 
-  public ClienteObserver(Subject subject, String nomeCliente) {
+  public ClienteObserver(Subject subject, String nomeCliente, String senha) {
     super(subject);
     this.nomeCliente = nomeCliente;
+    this.senhaCliente = senha;
   }
 
   @Override
-  public void update() {
+  public void atualizar() {
     Pedido pedidoPronto = (Pedido) subject.getPedidoPronto();
-    if (pedidoPronto != null) {
+    if (pedidoPronto != null&& senhaCliente.equals(pedidoPronto.getSenhaCliente())) {
       System.out.println("Notificação para " + nomeCliente + ":");
       System.out.println("Seu pedido está pronto!");
       System.out.println("Detalhes do Pedido:");

@@ -14,8 +14,10 @@ public class AcrescimoShitake extends AcrescimoDecorator {
     System.out.println("Com acréscimo de shitake.");
   }
 
+
+
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_SHITAKE;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_SHITAKE;
   }
 }

@@ -14,9 +14,11 @@ public class AcrescimoCroutons extends AcrescimoDecorator {
     System.out.println("Com acréscimo de croutons.");
   }
 
+
+
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_CROUTONS;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_CROUTONS;
   }
   
 }

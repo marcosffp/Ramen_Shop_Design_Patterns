@@ -14,9 +14,11 @@ public class BebidaRefrigerante extends BebidaDecorator {
     System.out.println("Com a bebida Refrigerante.");
   }
 
+
+
   @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_REFRIGERANTE;
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_REFRIGERANTE;
   }
   
 }

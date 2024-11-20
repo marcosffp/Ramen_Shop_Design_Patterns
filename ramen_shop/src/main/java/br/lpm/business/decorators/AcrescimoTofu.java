@@ -14,9 +14,10 @@ public class AcrescimoTofu extends AcrescimoDecorator {
     System.out.println("Com acréscimo de tofu.");
   }
 
-  @Override
-  public double calcularTotal() {
-    return super.calcularTotal() + PRECO_TOFU;
-  }
+
   
+  @Override
+  public double getPrecoTotal() {
+    return super.getPrecoTotal() + PRECO_TOFU;
+  }
 }
