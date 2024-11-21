@@ -1,0 +1,308 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>609</x><y>476</y><w>147</w><h>98</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+br.lpm.business.model
+Pedido
+--
++exibirDetalhes(): void
++getPrecoTotal(): double
++getNumeroPedido(): int
++getNomeCliente(): String
++getSenhaCliente(): String
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>854</x><y>455</y><w>217</w><h>154</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidosSingleton
+-
+_- INSTANCIA: PedidosSingleton_
+ - listaPedidos: Queue&lt;Pedido&gt;
+ - pedidosConcluidos: List&lt;Pedido&gt;
+ - temposPreparo: Map&lt;Integer, LocalDateTime&gt;
+ - cozinha: Subject
+--
++getInstancia(): PedidosSingleton
++getListaPedidos(): Queue&lt;Pedido&gt;
++getPedidosConcluidos(): List&lt;Pedido&gt;
++getTemposPreparo(): Map&lt;Integer, LocalDateTime&gt;
++getCozinha(): Subject
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>749</x><y>532</y><w>119</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>150;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>294</x><y>42</y><w>329</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidoFactory
+-
+
+-
++ criarPedido(tipoTamanho: String, proteina: String, nomeCliente: String): Pedido
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>616</x><y>84</y><w>217</w><h>406</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes><additional_attributes>10;11;50;10;50;110;290;110;290;480;120;480;120;560</additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>707</y><w>343</w><h>217</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidoPequeno
+-
+_- PRECO_BASE: double = 9.90_
+_- PRECO_VEGANO: double = 3.90_
+_- PRECO_BOI: double = 7.90_
+_- PRECO_PORCO: double = 5.90_
+_- contador: int = 1_
+- nomeCliente: String
+- senhaCliente: String
+- proteinaPedido: String
+- numeroPedido: int
+--
++ PedidoPequeno(proteinaPedido: String, nomeCliente: String, senhaCliente: String)
++ getNumeroPedido(): int
++ getProteinaPedido(): String
++ exibirDetalhes(): void
++ getNomeCliente(): String
++ getSenhaCliente(): String
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>707</y><w>343</w><h>217</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidoMedio
+-
+_- PRECO_BASE: double = 12.90_
+_- PRECO_VEGANO: double = 3.90_
+_- PRECO_BOI: double = 7.90_
+_- PRECO_PORCO: double = 5.90_
+_- contador: int = 1_
+_- nomeCliente: String
+_- senhaCliente: String
+_- proteinaPedido: String
+_- numeroPedido: int
+--
++ PedidoMedio(proteinaPedido: String, nomeCliente: String, senhaCliente: String)
++ getNumeroPedido(): int
++ getProteinaPedido(): String
++ exibirDetalhes(): void
++ getNomeCliente(): String
++ getSenhaCliente(): String
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>875</x><y>707</y><w>343</w><h>217</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidoGrande
+-
+_- PRECO_BASE: double = 15.90_
+_- PRECO_VEGANO: double = 3.90_
+_- PRECO_BOI: double = 7.90_
+_- PRECO_PORCO: double = 5.90_
+_- contador: int = 1_
+_- nomeCliente: String
+_- senhaCliente: String
+_- proteinaPedido: String
+_- numeroPedido: int
+--
++ PedidoGrande(proteinaPedido: String, nomeCliente: String, senhaCliente: String)
++ getNumeroPedido(): int
++ getProteinaPedido(): String
++ exibirDetalhes(): void
++ getNomeCliente(): String
++ getSenhaCliente(): String
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>665</x><y>567</y><w>21</w><h>154</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>301</x><y>644</y><w>385</w><h>77</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>530;10;10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>665</x><y>644</y><w>392</w><h>77</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;540;10;540;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1141</x><y>567</y><w>553</w><h>119</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.pedidos
+PedidoRelatorios
+-
+
+--
++ PedidoRelatorios(pedidosSingleton: PedidosSingleton)
++ exibirProgressoPedidos(): void
++ exibirBalanco(): void
++ exibirDetalhesPedidosConcluidos(itensVendidos: Map&lt;String, Long&gt;): void
++ exibirResumoBalanco(receitaTotal: double, ticketMedio: double, tempoMedioPreparo: double, itensVendidos: Map&lt;String, Long&gt;): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>602</y><w>147</w><h>42</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;40;190;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>518</y><w>161</w><h>119</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+br.lpm.business.decorators
+AcrescimoDecorator
+--
+
+--
++ AcrescimoDecorator(pedido: Pedido)
++ getNomeCliente(): String
++ exibirDetalhes(): void
++ getPrecoTotal(): double
++ getNumeroPedido(): int
++ getSenhaCliente(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>518</x><y>567</y><w>140</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;60;180;60;180;10</additional_attributes></element><element><id>Relation</id><coordinates><x>518</x><y>567</y><w>112</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>140;10;140;30;10;30</additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>385</y><w>161</w><h>119</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+br.lpm.business.decorators
+BebidaDecorator
+--
+
+--
++ BebidaDecorator(pedido: Pedido)
++ getNomeCliente(): String
++ exibirDetalhes(): void
++ getPrecoTotal(): double
++ getNumeroPedido(): int
++ getSenhaCliente(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>518</x><y>441</y><w>133</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;170;10;170;50</additional_attributes></element><element><id>Relation</id><coordinates><x>518</x><y>455</y><w>119</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;30;150;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>413</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoChilli
+--
+_- PRECO_CHILLI: double = 2.50_
+--
++ AcrescimoChilli(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>511</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoCremeAlho
+--
+_- PRECO_CREME_ALHO: double = 1.50_
+--
++ AcrescimoCremeAlho(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>609</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoCroutons
+--
+_- PRECO_CROUTONS: double = 2.00_
+--
++ AcrescimoCroutons(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>315</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoProteinaExtra
+--
+_- PRECO_PROTEINA_EXTRA: double = 4.00_
+--
++ AcrescimoProteinaExtra(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>217</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoShitake
+--
+_- PRECO_SHITAKE: double = 6.90_
+--
++ AcrescimoShitake(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>119</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+AcrescimoTofu
+--
+_- PRECO_TOFU: double = 2.70_
+--
++ AcrescimoTofu(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>546</y><w>210</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>280;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>546</y><w>91</w><h>119</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>110;10;110;150;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>441</y><w>91</w><h>126</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>110;160;110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>336</y><w>91</w><h>126</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>110;160;110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>238</y><w>91</w><h>126</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>110;160;110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>147</y><w>91</w><h>126</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>110;160;110;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>259</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+BebidaKoCha
+--
+_- PRECO_KOCHA: double = 0.00_
+--
++ BebidaKoCha(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>441</x><y>259</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+BebidaOCha
+--
+_- PRECO_KOCHA: double = 3.90_
+--
++ BebidaOCha(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>259</y><w>175</w><h>91</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.decorators
+BebidaRefrigerante
+--
+_- PRECO_REFRIGERANTE: double = 5.90_
+--
++ BebidaRefrigerante(pedido: Pedido)
++ exibirDetalhes(): void
++ getPrecoTotal(): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>455</x><y>343</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>455</x><y>343</y><w>259</w><h>35</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;30;350;30;350;10</additional_attributes></element><element><id>Relation</id><coordinates><x>322</x><y>343</y><w>154</w><h>35</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>200;30;10;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>854</x><y>245</y><w>259</w><h>105</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.repository
+ImplPedidoRepositorio
+--
+
+--
++ ImplPedidoRepositorio(pedidosSingleton: PedidosSingleton)
++ buscarPedidoPorNumero(numeroPedido: int): Pedido
++ buscarPedidoPorSenha(senha: String): Pedido
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>931</x><y>343</y><w>21</w><h>126</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1155</x><y>273</y><w>259</w><h>70</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+br.lpm.business.repository
+PedidoRepository
+--
++ buscarPedidoPorNumero(numeroPedido: int): Pedido
++ buscarPedidoPorSenha(senha: String): Pedido
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1106</x><y>301</y><w>63</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1127</x><y>406</y><w>406</w><h>119</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+br.lpm.business.services
+GerenciamentoPedido
+--
+
+--
++ GerenciamentoPedido(pedidosSingleton: PedidosSingleton, pedidoRepository: PedidoRepository)
++ getPedidosSingleton(): PedidosSingleton
++ getPedidoRepository(): PedidoRepository
++ adicionarPedido(pedido: Pedido): void
++ retirarPedidoCozinha(numeroPedido: int): void
++ retirarPedido(senha: String): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1316</x><y>336</y><w>21</w><h>84</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>1064</x><y>483</y><w>77</w><h>91</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;110;70;110;70;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1582</x><y>406</y><w>406</w><h>119</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.services
+ImplGerencimanetoPedido
+--
+
+--
++ ImplGerencimanetoPedido(pedidosSingleton: PedidosSingleton, pedidoRepository: PedidoRepository)
++ adicionarPedido(pedido: Pedido): void
++ retirarPedidoCozinha(numeroPedido: int): void
++ retirarPedido(senha: String): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1526</x><y>462</y><w>70</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1589</x><y>273</y><w>371</w><h>98</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.utils
+CalculoTempo
+--
+
+--
+- CalcularTempo()
+_+ duracaoProcessamentoPedido(pedido: Pedido, pedidosSingleton: PedidosSingleton): void_
+_+ calcularTempoMedioPreparo(pedidosSingleton: PedidosSingleton): double_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>154</y><w>371</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.utils
+GeradorSenha
+--
+
+--
+- GeradorSenha()
+_+ gerarSenha(): String_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1295</x><y>770</y><w>371</w><h>105</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.utils
+CalulosFinanceiros
+--
+
+--
+- CalulosFinanceiros()
+_+ calcularReceitaTotal(pedidosSingleton: PedidosSingleton): double_
+_+ calularItensVendidos(pedidosSingleton: PedidosSingleton): Map&lt;String, Long&gt;_
+_+ calcularTicketMedio(receitaTotal: double, pedidosSingleton: PedidosSingleton): double_
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>378</x><y>112</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1771</x><y>364</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1127</x><y>14</y><w>371</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+br.lpm.business.observer
+Observer
+--
+
+--
++ Observer(subject: Subject)
++ atualizar(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1456</x><y>679</y><w>21</w><h>105</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>7</y><w>371</w><h>126</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.observer
+Subject
+--
+
+--
++ getPedidoPronto(): Pedido
++ setPedidoPronto(pedidoPronto: Pedido): void
++ registrarObservador(observer: Observer): void
++ removerObservador(observer: Observer): void
+- notificarObservadores(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>833</x><y>126</y><w>224</w><h>343</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>300;10;300;160;10;160;10;340;40;340;40;470</additional_attributes></element><element><id>Relation</id><coordinates><x>1057</x><y>49</y><w>84</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>749</x><y>126</y><w>98</w><h>399</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>120;10;120;550;10;550</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1127</x><y>133</y><w>371</w><h>112</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+br.lpm.business.observer
+ClienteObserver
+--
+- nomeCliente: String
+- senhaCliente: String
+--
++ ClienteObserver(subject: Subject, nomeCliente: String, senha: String)
++ atualizar(): void
++ getNomeCliente(): String
++ getSenhaCliente(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1295</x><y>84</y><w>21</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element></diagram>

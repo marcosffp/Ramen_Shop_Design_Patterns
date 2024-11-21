@@ -1,32 +1,29 @@
 package br.lpm.business.controller;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 import br.lpm.business.decorators.*;
 import br.lpm.business.model.Pedido;
-import br.lpm.business.observer.ClienteObserver;
-import br.lpm.business.observer.Observer;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidoRelatorios;
 import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.services.GerenciamentoPedido;
-import br.lpm.business.services.NotificacaoService;
-import br.lpm.business.utils.CalculoTempo;
+
 
 public class PedidoController {
   private final Scanner scanner;
   private final PedidosSingleton pedidosSingleton;
   private final GerenciamentoPedido gerenciamentoPedido;
   private final PedidoFactory ramenFactory;
-  private final NotificacaoService notificacaoService;
 
   public PedidoController(Scanner scanner, PedidosSingleton pedidosSingleton, GerenciamentoPedido gerenciamentoPedido,
-      PedidoFactory ramenFactory, NotificacaoService notificacaoService) {
+      PedidoFactory ramenFactory) {
     this.scanner = scanner;
     this.pedidosSingleton = pedidosSingleton;
     this.gerenciamentoPedido = gerenciamentoPedido;
     this.ramenFactory = ramenFactory;
-    this.notificacaoService = notificacaoService;
+
   }
 
   public void exibirMenuPrincipal() {
@@ -55,27 +52,25 @@ public class PedidoController {
     try {
       System.out.println("Informe o nome do cliente:");
       String nomeCliente = scanner.nextLine();
-
       System.out.println("Informe o tamanho do pedido (Pequeno, Medio, Grande):");
       String tamanho = scanner.nextLine();
-
       System.out.println("Informe a proteína (Vegano, Boi, Porco):");
       String proteina = scanner.nextLine();
-
       Pedido pedido = ramenFactory.criarPedido(tamanho, proteina, nomeCliente);
-      adicionarAcrecimos(pedido);
-      adicionarBebida(pedido);
-
+      pedido=adicionarAcrecimos(pedido);
+      pedido =adicionarBebida(pedido);
       gerenciamentoPedido.adicionarPedido(pedido);
       System.out.println("Pedido registrado com sucesso!");
       System.out.println("Seu número de pedido é: " + pedido.getNumeroPedido());
       System.out.println("Sua senha para retirada é: " + pedido.getSenhaCliente());
+      exibirInformacoesPedido(pedido);
     } catch (IllegalArgumentException e) {
       System.out.println("Erro ao criar pedido: " + e.getMessage());
     }
+
   }
 
-  private void adicionarAcrecimos(Pedido pedido) {
+  private Pedido adicionarAcrecimos(Pedido pedido) {
     String opcao;
     do {
       System.out.println("\nDeseja adicionar algum acréscimo?");
@@ -100,9 +95,10 @@ public class PedidoController {
         default -> System.out.println("Opção inválida. Tente novamente.");
       }
     } while (!opcao.equals("0"));
+    return pedido;
   }
 
-  private void adicionarBebida(Pedido pedido) {
+  private Pedido adicionarBebida(Pedido pedido) {
     String bebida;
     do {
       System.out.println("\nDeseja adicionar uma bebida?");
@@ -121,37 +117,44 @@ public class PedidoController {
         default -> System.out.println("Opção inválida. Tente novamente.");
       }
     } while (!bebida.equals("0"));
+    return pedido;
   }
 
   private void retirarPedidoCozinha() {
     System.out.println("Informe o número do pedido para confirmar retirada:");
     int numeroPedido = scanner.nextInt();
-    scanner.nextLine(); // Consumir a quebra de linha
-
+    scanner.nextLine(); 
     gerenciamentoPedido.retirarPedidoCozinha(numeroPedido);
   }
 
   private void retirarPedido() {
     System.out.println("Informe a senha para retirar o pedido:");
     String senha = scanner.nextLine();
-
-    gerenciamentoPedido.retirarPedido(senha);
-
+    verificarPagamento();
     Pedido pedidoPronto = pedidosSingleton.getCozinha().getPedidoPronto();
-    if (pedidoPronto != null) {
-      Observer cliente = new ClienteObserver(pedidosSingleton.getCozinha(),
-          pedidoPronto.getNomeCliente(), senha);
-      notificacaoService.notificarCliente(pedidosSingleton.getCozinha(), cliente);
-
-      CalculoTempo.duracaoProcessamentoPedido(pedidoPronto, pedidosSingleton);
-      System.out.println("Cliente notificado sobre o pedido pronto.");
-    } else {
+    if (pedidoPronto == null || !senha.equals(pedidoPronto.getSenhaCliente())) {
       System.out.println("Nenhum pedido disponível para retirada.");
+      return;
     }
-
-    System.out.println("Total de pedidos concluídos: " + pedidosSingleton.getPedidosConcluidos().size());
-
   }
+
+  private void exibirInformacoesPedido(Pedido pedidoPronto) {
+    DecimalFormat dformat = new DecimalFormat("#.##");
+    System.out.println("Pedido pronto para retirada: ");
+    System.out.println("Cliente: " + pedidoPronto.getNomeCliente());
+    System.out.println("Total do pedido: R$ " + dformat.format(pedidoPronto.getPrecoTotal()));
+  }
+
+  private void verificarPagamento() {
+    System.out.println("O pagamento foi realizado? (sim/não)");
+    String pagamento = scanner.nextLine();
+    if (pagamento.equalsIgnoreCase("sim")) {
+      System.out.println("Pagamento confirmado. Pode retirar seu pedido.");
+    } else {
+      System.out.println("Lembre-se de realizar o pagamento antes de retirar o pedido.");
+    }
+  }
+
 
   private void exibirBalanco() {
     System.out.println("\nExibindo balanço dos pedidos:");

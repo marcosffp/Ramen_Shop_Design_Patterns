@@ -6,7 +6,11 @@ import java.util.Map;
 import br.lpm.business.model.Pedido;
 import br.lpm.business.pedidos.PedidosSingleton;
 
-public class CalulosFinanceiros {
+public final class CalulosFinanceiros {
+
+  private CalulosFinanceiros() {
+  }
+
   public static double calcularReceitaTotal(PedidosSingleton pedidosSingleton) {
     return pedidosSingleton.getPedidosConcluidos().stream().mapToDouble(Pedido::getPrecoTotal).sum();
   }

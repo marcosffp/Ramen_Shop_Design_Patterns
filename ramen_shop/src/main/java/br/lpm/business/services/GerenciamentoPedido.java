@@ -1,15 +1,31 @@
 package br.lpm.business.services;
 
 import br.lpm.business.model.Pedido;
+import br.lpm.business.pedidos.PedidosSingleton;
+import br.lpm.business.repository.PedidoRepository;
 
-public interface GerenciamentoPedido {
-    public void adicionarPedido(Pedido pedido);
+public abstract class GerenciamentoPedido {
 
-    public void retirarPedido(String senha);
+  private final PedidosSingleton pedidosSingleton;
+  private final PedidoRepository pedidoRepository;
 
-    public void retirarPedidoCozinha(int numeroPedido);
+  public GerenciamentoPedido(PedidosSingleton pedidosSingleton, PedidoRepository pedidoRepository) {
+    this.pedidosSingleton = pedidosSingleton;
+    this.pedidoRepository = pedidoRepository;
+  }
 
-    public void concluirPedido(Pedido pedido);
+  public PedidosSingleton getPedidosSingleton() {
+    return pedidosSingleton;
+  }
 
-    public void verificarPedidoFoiCozinha(Pedido pedido);
+  public PedidoRepository getPedidoRepository() {
+    return pedidoRepository;
+  }
+
+  public abstract void adicionarPedido(Pedido pedido);
+
+  public abstract void retirarPedidoCozinha(int numeroPedido);
+
+  public abstract void retirarPedido(String senha);
+
 }

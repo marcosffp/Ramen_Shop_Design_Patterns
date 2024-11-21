@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class PedidosSingleton {
-  private static PedidosSingleton INSTANCIA;
+  private static PedidosSingleton INSTANCIA= new PedidosSingleton();
   private final Queue<Pedido> listaPedidos = new LinkedList<>();
   private final List<Pedido> pedidosConcluidos = new ArrayList<>();
   private final Map<Integer, LocalDateTime> temposPreparo = new HashMap<>();
@@ -17,10 +17,7 @@ public class PedidosSingleton {
   }
 
   public static PedidosSingleton getInstancia() {
-    if (INSTANCIA == null) {
-      INSTANCIA = new PedidosSingleton();
-    }
-    return INSTANCIA;
+    return PedidosSingleton.INSTANCIA;
   }
 
   public Queue<Pedido> getListaPedidos() {

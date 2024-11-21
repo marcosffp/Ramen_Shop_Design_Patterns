@@ -8,6 +8,9 @@ import br.lpm.business.pedidos.PedidosSingleton;
 
 public final class CalculoTempo {
 
+  private CalculoTempo() {
+  }
+
   public static void duracaoProcessamentoPedido(Pedido pedido, PedidosSingleton pedidosSingleton) {
     LocalDateTime tempoInicio = pedidosSingleton.getTemposPreparo().get(pedido.getNumeroPedido());
     if (tempoInicio != null) {
