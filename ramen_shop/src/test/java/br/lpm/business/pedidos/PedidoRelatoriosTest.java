@@ -1,6 +1,8 @@
 package br.lpm.business.pedidos;
 
 import br.lpm.business.model.Pedido;
+import br.lpm.business.services.ImplPedidoRelatorios;
+import br.lpm.business.services.PedidoRelatorios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,13 +32,7 @@ public class PedidoRelatoriosTest {
     pedidosSingleton.getPedidosConcluidos().add(pedido2);
     pedidosSingleton.getPedidosConcluidos().add(pedido3);
 
-    pedidoRelatorios = new PedidoRelatorios(pedidosSingleton);
-  }
-
-  @Test
-  void testExibirBalanco() {
-    assertDoesNotThrow(() -> pedidoRelatorios.exibirBalanco(),
-        "O método exibirBalanco deve ser executado sem lançar exceções");
+    pedidoRelatorios = new ImplPedidoRelatorios(pedidosSingleton);
   }
 
   @Test

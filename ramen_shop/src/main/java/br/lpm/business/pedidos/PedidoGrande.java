@@ -1,13 +1,13 @@
 package br.lpm.business.pedidos;
 
 import br.lpm.business.model.Pedido;
+import br.lpm.business.utils.GeradorIdPedido;
 
 public class PedidoGrande implements Pedido {
   private static final double PRECO_BASE = 15.90;
   private static final double PRECO_VEGANO = 3.90;
   private static final double PRECO_BOI = 7.90;
   private static final double PRECO_PORCO = 5.90;
-  private static int contador = 1;
   private String nomeCliente;
   private String senhaCliente;
   private String proteinaPedido;
@@ -17,7 +17,7 @@ public class PedidoGrande implements Pedido {
     this.proteinaPedido = proteinaPedido;
     this.nomeCliente = nomeCliente;
     this.senhaCliente = senhaCliente;
-    this.numeroPedido = contador++;
+        this.numeroPedido = GeradorIdPedido.gerarId();
   }
 
   public int getNumeroPedido() {
@@ -51,10 +51,6 @@ public class PedidoGrande implements Pedido {
       case "PORCO" -> PRECO_BASE + PRECO_PORCO;
       default -> PRECO_BASE;
     };
-  }
-
-  public static void resetContador() {
-    contador = 1;
   }
 
 }

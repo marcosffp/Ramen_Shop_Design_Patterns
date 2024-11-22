@@ -14,7 +14,9 @@ public class PedidosSingletonTest {
 
   @BeforeEach
   void setUp() {
-    pedidosSingleton = PedidosSingleton.getInstancia();
+    pedidosSingleton = PedidosSingleton.getInstancia(); 
+    pedidosSingleton.getListaPedidos().clear();
+    pedidosSingleton.getPedidosConcluidos().clear();
     cozinha = pedidosSingleton.getCozinha();
   }
 
@@ -43,7 +45,7 @@ public class PedidosSingletonTest {
   void testGetPedidosConcluidos() {
     assertTrue(pedidosSingleton.getPedidosConcluidos().isEmpty(),
         "Testando se a lista de pedidos concluídos está vazia inicialmente");
-     Pedido pedido = new PedidoPequeno(null, null, null);
+    Pedido pedido = new PedidoPequeno(null, null, null);
     pedidosSingleton.getPedidosConcluidos().add(pedido);
     assertFalse(pedidosSingleton.getPedidosConcluidos().isEmpty(),
         "Testando se a lista de pedidos concluídos não está vazia após adicionar um pedido");

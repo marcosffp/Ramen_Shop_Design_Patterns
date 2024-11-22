@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.lpm.business.utils.GeradorIdPedido;
+
 public class PedidoGrandeTest {
   private PedidoGrande pedidoGrandeBoi;
   private PedidoGrande pedidoGrandePorco;
@@ -12,7 +14,7 @@ public class PedidoGrandeTest {
 
   @BeforeEach
   void setUp() {
-    PedidoGrande.resetContador();
+    GeradorIdPedido.reset();
     pedidoGrandeBoi = new PedidoGrande("BOI", "Marcos", "1234");
     pedidoGrandePorco = new PedidoGrande("PORCO", "Alvim", "2345");
     pedidoGrandeVegano = new PedidoGrande("VEGANO", "Jamilly", "3456");
@@ -76,15 +78,5 @@ public class PedidoGrandeTest {
         "Testando se a senha do cliente do pedido grande com proteína de porco foi criada corretamente");
     assertEquals("3456", pedidoGrandeVegano.getSenhaCliente(),
         "Testando se a senha do cliente do pedido grande com proteína vegana foi criada corretamente");
-  }
-
-  @Test
-  void testResetContador() {
-    new PedidoGrande("BOI", "Marcos", "1234");
-    new PedidoGrande("PORCO", "Alvim", "4565");
-    new PedidoGrande("VEGANO", "Jamilly", "7896");
-    PedidoGrande.resetContador();
-    PedidoGrande novoPedido = new PedidoGrande("BOI", "Carlos", "000");
-    assertEquals(1, novoPedido.getNumeroPedido(), "Testando se o contador foi resetado corretamente");
   }
 }

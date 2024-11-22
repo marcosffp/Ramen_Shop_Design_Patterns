@@ -1,4 +1,4 @@
-package br.lpm.business.controller;
+package br.lpm.main.controlador;
 
 import java.text.DecimalFormat;
 import javax.swing.JFrame;
@@ -7,17 +7,18 @@ import javax.swing.JOptionPane;
 import br.lpm.business.decorators.*;
 import br.lpm.business.model.Pedido;
 import br.lpm.business.pedidos.PedidoFactory;
-import br.lpm.business.pedidos.PedidoRelatorios;
 import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.services.GerenciamentoPedido;
+import br.lpm.business.services.ImplPedidoRelatorios;
+import br.lpm.business.services.PedidoRelatorios;
 
-public class PedidoController {
+public class ControladorPedido {
   private final PedidosSingleton pedidosSingleton;
   private final GerenciamentoPedido gerenciamentoPedido;
   private final PedidoFactory ramenFactory;
   private final JFrame frame;
 
-  public PedidoController(PedidosSingleton pedidosSingleton, GerenciamentoPedido gerenciamentoPedido,
+  public ControladorPedido(PedidosSingleton pedidosSingleton, GerenciamentoPedido gerenciamentoPedido,
       PedidoFactory ramenFactory) {
     this.pedidosSingleton = pedidosSingleton;
     this.gerenciamentoPedido = gerenciamentoPedido;
@@ -55,7 +56,7 @@ public class PedidoController {
   }
 
   public void executarOpcao(int escolha) {
-    PedidoRelatorios relatorios = new PedidoRelatorios(pedidosSingleton);
+    PedidoRelatorios relatorios = new ImplPedidoRelatorios(pedidosSingleton);
 
     switch (escolha) {
       case 1 -> fazerPedido();

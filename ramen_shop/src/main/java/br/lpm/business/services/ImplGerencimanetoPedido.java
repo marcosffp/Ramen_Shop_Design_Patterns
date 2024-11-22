@@ -20,13 +20,13 @@ public class ImplGerencimanetoPedido extends GerenciamentoPedido {
 
   @Override
   public void retirarPedidoCozinha(int numeroPedido) {
-    Pedido pedido = super.getPedidoRepository().buscarPedidoPorNumero(numeroPedido);
+    Pedido pedido = super.getPedidoRepository().buscarPedidoPorNumero(super.getPedidosSingleton(),numeroPedido);
     super.getPedidosSingleton().getCozinha().setPedidoPronto(pedido);
   }
 
   @Override
   public void retirarPedido(String senha) {
-    Pedido pedidoEncontrado = super.getPedidoRepository().buscarPedidoPorSenha(senha);
+    Pedido pedidoEncontrado = super.getPedidoRepository().buscarPedidoPorSenha(super.getPedidosSingleton(),senha);
     super.getPedidosSingleton().getListaPedidos().remove(pedidoEncontrado);
     super.getPedidosSingleton().getPedidosConcluidos().add(pedidoEncontrado);
   }

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.lpm.business.utils.GeradorIdPedido;
+
 public class PedidoPequenoTest {
 
   private PedidoPequeno pedidoPequenoBoi;
@@ -13,7 +15,7 @@ public class PedidoPequenoTest {
 
   @BeforeEach
   void setUp() {
-    PedidoPequeno.resetContador();
+    GeradorIdPedido.reset();
     pedidoPequenoBoi = new PedidoPequeno("BOI", "Marcos", "1234");
     pedidoPequenoPorco = new PedidoPequeno("PORCO", "Alvim", "2345");
     pedidoPequenoVegano = new PedidoPequeno("VEGANO", "Jamilly", "3456");
@@ -59,15 +61,5 @@ public class PedidoPequenoTest {
     assertEquals("1234", pedidoPequenoBoi.getSenhaCliente(), "Testando se a senha do cliente do pedido pequeno com proteína de boi foi criado corretamente");
     assertEquals("2345", pedidoPequenoPorco.getSenhaCliente(), "Testando se a senha do cliente do pedido pequeno com proteína de porco foi criado corretamente");
     assertEquals("3456", pedidoPequenoVegano.getSenhaCliente(), "Testando se a senha do cliente do pedido pequeno com proteína vegana foi criado corretamente");
-  }
-
-  @Test
-  void testResetContador() {
-    new PedidoPequeno("BOI", "Marcos", "1234");
-    new PedidoPequeno("PORCO", "Alvim", "4565");
-    new PedidoPequeno("VEGANO", "Jamilly", "7896");
-    PedidoPequeno.resetContador();
-    PedidoPequeno novoPedido = new PedidoPequeno("BOI", "Carlos", "000");
-    assertEquals(1, novoPedido.getNumeroPedido(), "Testando se o contador foi resetado corretamente");
   }
 }

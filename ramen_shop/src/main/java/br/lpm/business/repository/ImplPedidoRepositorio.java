@@ -5,14 +5,8 @@ import br.lpm.business.pedidos.PedidosSingleton;
 
 public class ImplPedidoRepositorio implements PedidoRepository {
 
-  private final PedidosSingleton pedidosSingleton;
-
-  public ImplPedidoRepositorio(PedidosSingleton pedidosSingleton) {
-    this.pedidosSingleton = pedidosSingleton;
-  }
-
   @Override
-  public Pedido buscarPedidoPorNumero(int numeroPedido) {
+  public Pedido buscarPedidoPorNumero(PedidosSingleton pedidosSingleton,int numeroPedido) {
     return pedidosSingleton.getListaPedidos().stream()
         .filter(pedido -> pedido.getNumeroPedido() == numeroPedido)
         .findFirst()
@@ -23,7 +17,7 @@ public class ImplPedidoRepositorio implements PedidoRepository {
   }
 
   @Override
-  public Pedido buscarPedidoPorSenha(String senha) {
+  public Pedido buscarPedidoPorSenha(PedidosSingleton pedidosSingleton,String senha) {
     return pedidosSingleton.getListaPedidos().stream()
         .filter(pedido -> pedido.getSenhaCliente().equals(senha))
         .findFirst()

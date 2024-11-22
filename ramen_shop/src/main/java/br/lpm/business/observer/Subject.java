@@ -33,4 +33,8 @@ public class Subject {
   private void notificarObservadores() {
     observadores.forEach(Observer::atualizar);
   }
+
+  public List<Observer> getObservadores() {
+    return observadores;
+  }
 }

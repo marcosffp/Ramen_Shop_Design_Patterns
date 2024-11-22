@@ -3,6 +3,8 @@ package br.lpm.business.pedidos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.lpm.business.utils.GeradorIdPedido;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PedidoMedioTest {
@@ -13,7 +15,7 @@ public class PedidoMedioTest {
 
   @BeforeEach
   void setUp() {
-    PedidoMedio.resetContador();
+    GeradorIdPedido.reset();
     pedidoMedioBoi = new PedidoMedio("BOI", "Marcos", "1234");
     pedidoMedioPorco = new PedidoMedio("PORCO", "Alvim", "2345");
     pedidoMedioVegano = new PedidoMedio("VEGANO", "Jamilly", "3456");
@@ -77,15 +79,5 @@ public class PedidoMedioTest {
         "Testando se a senha do cliente do pedido médio com proteína de porco foi criado corretamente");
     assertEquals("3456", pedidoMedioVegano.getSenhaCliente(),
         "Testando se a senha do cliente do pedido médio com proteína vegana foi criado corretamente");
-  }
-
-  @Test
-  void testResetContador() {
-    new PedidoMedio("BOI", "Marcos", "1234");
-    new PedidoMedio("PORCO", "Alvim", "4565");
-    new PedidoMedio("VEGANO", "Jamilly", "7896");
-    PedidoMedio.resetContador();
-    PedidoMedio novoPedido = new PedidoMedio("BOI", "Carlos", "000");
-    assertEquals(1, novoPedido.getNumeroPedido(), "Testando se o contador foi resetado corretamente");
   }
 }

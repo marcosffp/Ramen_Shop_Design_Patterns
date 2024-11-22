@@ -3,16 +3,17 @@ package br.lpm.main;
 import javax.swing.*;
 import java.awt.GridLayout;
 
-import br.lpm.business.controller.PedidoController;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.repository.ImplPedidoRepositorio;
 import br.lpm.business.repository.PedidoRepository;
 import br.lpm.business.services.GerenciamentoPedido;
 import br.lpm.business.services.ImplGerencimanetoPedido;
+import br.lpm.main.controlador.ControladorPedido;
+
 
 public class Main extends JFrame {
-    private final PedidoController pedidoController;
+    private final ControladorPedido controladorPedido;
 
     public Main() {
         setTitle("Ramen Shop");
@@ -21,10 +22,10 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
 
         PedidosSingleton pedidosSingleton = PedidosSingleton.getInstancia();
-        PedidoRepository pedidoRepository = new ImplPedidoRepositorio(pedidosSingleton);
+        PedidoRepository pedidoRepository = new ImplPedidoRepositorio();
         GerenciamentoPedido gerenciamentoPedido = new ImplGerencimanetoPedido(pedidosSingleton, pedidoRepository);
         PedidoFactory ramenFactory = new PedidoFactory();
-        pedidoController = new PedidoController(pedidosSingleton, gerenciamentoPedido, ramenFactory);
+        controladorPedido = new ControladorPedido(pedidosSingleton, gerenciamentoPedido, ramenFactory);
 
         inicializarComponentes();
     }
@@ -63,7 +64,7 @@ public class Main extends JFrame {
 
     private void executarOpcao(int opcao) {
         try {
-            pedidoController.executarOpcao(opcao);
+            controladorPedido.executarOpcao(opcao);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
