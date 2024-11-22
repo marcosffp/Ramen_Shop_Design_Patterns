@@ -16,7 +16,10 @@ public class ImplPedidoRepositorio implements PedidoRepository {
     return pedidosSingleton.getListaPedidos().stream()
         .filter(pedido -> pedido.getNumeroPedido() == numeroPedido)
         .findFirst()
-        .orElse(null);
+        .orElseGet(() -> pedidosSingleton.getPedidosConcluidos().stream()
+            .filter(pedido -> pedido.getNumeroPedido() == numeroPedido)
+            .findFirst()
+            .orElse(null));
   }
 
   @Override
@@ -24,7 +27,10 @@ public class ImplPedidoRepositorio implements PedidoRepository {
     return pedidosSingleton.getListaPedidos().stream()
         .filter(pedido -> pedido.getSenhaCliente().equals(senha))
         .findFirst()
-        .orElse(null);
+        .orElseGet(() -> pedidosSingleton.getPedidosConcluidos().stream()
+            .filter(pedido -> pedido.getSenhaCliente().equals(senha))
+            .findFirst()
+            .orElse(null));
   }
 
 

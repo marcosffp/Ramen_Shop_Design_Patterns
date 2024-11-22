@@ -15,8 +15,8 @@ public abstract class BebidaDecorator implements Pedido {
   }
 
   @Override
-  public void exibirDetalhes() {
-    pedido.exibirDetalhes();
+  public String exibirDetalhes() {
+    return pedido.exibirDetalhes();
   }
 
   @Override

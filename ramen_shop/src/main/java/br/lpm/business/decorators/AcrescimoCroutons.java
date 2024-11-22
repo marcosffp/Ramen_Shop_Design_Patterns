@@ -9,9 +9,8 @@ public class AcrescimoCroutons extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de croutons.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de croutons.";
   }
 
 

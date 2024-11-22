@@ -1,6 +1,8 @@
 package br.lpm.main;
 
 import javax.swing.*;
+import java.awt.GridLayout;
+
 import br.lpm.business.controller.PedidoController;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidosSingleton;
@@ -13,49 +15,59 @@ public class Main extends JFrame {
     private final PedidoController pedidoController;
 
     public Main() {
-        // Configuração inicial do JFrame
         setTitle("Ramen Shop");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Inicialização de dependências
         PedidosSingleton pedidosSingleton = PedidosSingleton.getInstancia();
         PedidoRepository pedidoRepository = new ImplPedidoRepositorio(pedidosSingleton);
         GerenciamentoPedido gerenciamentoPedido = new ImplGerencimanetoPedido(pedidosSingleton, pedidoRepository);
         PedidoFactory ramenFactory = new PedidoFactory();
-        pedidoController = new PedidoController(null, pedidosSingleton, gerenciamentoPedido, ramenFactory);
+        pedidoController = new PedidoController(pedidosSingleton, gerenciamentoPedido, ramenFactory);
 
-        // Criação e configuração do menu principal
-        JPanel panel = new JPanel();
+        inicializarComponentes();
+    }
+
+    private void inicializarComponentes() {
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
         JButton btnFazerPedido = new JButton("Fazer Pedido");
         JButton btnRetirarCozinha = new JButton("Retirar da Cozinha");
         JButton btnRetirarPedido = new JButton("Retirar Pedido");
-        JButton btnBalanco = new JButton("Exibir Balanço");
+        JButton btnResumoBalanco = new JButton("Resumo do Balanço");
+        JButton btnDetalhesBalanco = new JButton("Detalhes do Balanço");
         JButton btnProgresso = new JButton("Exibir Progresso");
         JButton btnSair = new JButton("Sair");
 
-        // Adicionando ações aos botões
-        btnFazerPedido.addActionListener(e -> pedidoController.executarOpcao(1));
-        btnRetirarCozinha.addActionListener(e -> pedidoController.executarOpcao(2));
-        btnRetirarPedido.addActionListener(e -> pedidoController.executarOpcao(3));
-        btnBalanco.addActionListener(e -> pedidoController.executarOpcao(4));
-        btnProgresso.addActionListener(e -> pedidoController.executarOpcao(5));
+        btnFazerPedido.addActionListener(e -> executarOpcao(1));
+        btnProgresso.addActionListener(e -> executarOpcao(2));
+        btnRetirarCozinha.addActionListener(e -> executarOpcao(3));
+        btnRetirarPedido.addActionListener(e -> executarOpcao(4));
+        btnResumoBalanco.addActionListener(e -> executarOpcao(5));
+        btnDetalhesBalanco.addActionListener(e -> executarOpcao(6));
         btnSair.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Sistema encerrado.");
             System.exit(0);
         });
 
-        // Adicionando botões ao painel
         panel.add(btnFazerPedido);
+        panel.add(btnProgresso);
         panel.add(btnRetirarCozinha);
         panel.add(btnRetirarPedido);
-        panel.add(btnBalanco);
-        panel.add(btnProgresso);
+        panel.add(btnResumoBalanco);
+        panel.add(btnDetalhesBalanco);
         panel.add(btnSair);
 
-        // Adicionando o painel ao JFrame
         add(panel);
+    }
+
+    private void executarOpcao(int opcao) {
+        try {
+            pedidoController.executarOpcao(opcao);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {

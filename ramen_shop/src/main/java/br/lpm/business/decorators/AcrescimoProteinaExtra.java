@@ -9,9 +9,8 @@ public class AcrescimoProteinaExtra extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de proteína extra.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de proteína extra.";
   }
 
   

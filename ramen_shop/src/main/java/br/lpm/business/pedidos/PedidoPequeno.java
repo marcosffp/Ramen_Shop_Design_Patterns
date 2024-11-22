@@ -29,8 +29,8 @@ public class PedidoPequeno implements Pedido {
   }
 
   @Override
-  public void exibirDetalhes() {
-    System.out.println("Pedido Pequeno com proteina: " + proteinaPedido);
+  public String exibirDetalhes() {
+    return "Pedido Pequeno com proteina: " + proteinaPedido;
   }
 
   @Override
@@ -51,6 +51,10 @@ public class PedidoPequeno implements Pedido {
       case "PORCO" -> PRECO_BASE + PRECO_PORCO;
       default -> PRECO_BASE;
     };
+  }
+
+  public static void resetContador() {
+    contador = 1;
   }
 
 }

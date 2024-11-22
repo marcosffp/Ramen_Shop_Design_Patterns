@@ -9,9 +9,8 @@ public class AcrescimoTofu extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de tofu.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de tofu.";
   }
 
 

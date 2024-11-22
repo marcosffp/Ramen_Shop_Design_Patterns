@@ -10,9 +10,8 @@ public class AcrescimoCremeAlho extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de Creme de Alho.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de Creme de Alho.";
   }
 
 

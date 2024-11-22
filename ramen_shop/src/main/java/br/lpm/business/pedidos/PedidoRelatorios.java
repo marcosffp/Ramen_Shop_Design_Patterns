@@ -1,8 +1,8 @@
 package br.lpm.business.pedidos;
-import java.util.Map;
 
+import javax.swing.*;
+import java.util.Map;
 import br.lpm.business.model.Pedido;
-import br.lpm.business.utils.CalculoTempo;
 import br.lpm.business.utils.CalulosFinanceiros;
 
 public class PedidoRelatorios {
@@ -13,47 +13,64 @@ public class PedidoRelatorios {
   }
 
   public void exibirProgressoPedidos() {
-    System.out.println("Progresso dos Pedidos:");
-    exibirPedidos("Em Espera", pedidosSingleton.getListaPedidos());
-    exibirPedidos("\nConcluídos", pedidosSingleton.getPedidosConcluidos());
+    StringBuilder progresso = new StringBuilder("Progresso dos Pedidos:\n");
+    progresso.append(exibirPedidos("Em Espera", pedidosSingleton.getListaPedidos()));
+    progresso.append(exibirPedidos("\nConcluídos", pedidosSingleton.getPedidosConcluidos()));
+
+    JOptionPane.showMessageDialog(null, progresso.toString(), "Progresso dos Pedidos", JOptionPane.INFORMATION_MESSAGE);
   }
 
-  private void exibirPedidos(String titulo, Iterable<Pedido> pedidos) {
-    System.out.println(titulo + ":");
+  private String exibirPedidos(String titulo, Iterable<Pedido> pedidos) {
+    StringBuilder detalhes = new StringBuilder(titulo).append(":\n");
     for (Pedido pedido : pedidos) {
-      System.out.println("- Pedido #" + pedido.getNumeroPedido());
+      detalhes.append("- Pedido #").append(pedido.getNumeroPedido()).append("\n");
     }
+    return detalhes.toString();
   }
 
   public void exibirBalanco() {
-    double receitaTotal = CalulosFinanceiros.calcularReceitaTotal(pedidosSingleton);
+    exibirDetalhesBalanco();
+    exibirResumoBalanco();
+  }
+
+  public void exibirDetalhesBalanco() {
     Map<String, Long> itensVendidos = CalulosFinanceiros.calularItensVendidos(pedidosSingleton);
+    String detalhesPedidos = obterDetalhesPedidosConcluidos(itensVendidos);
+
+    JOptionPane.showMessageDialog(null, detalhesPedidos, "Detalhes dos Pedidos Concluídos",
+        JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  public void exibirResumoBalanco() {
+    double receitaTotal = CalulosFinanceiros.calcularReceitaTotal(pedidosSingleton);
     double ticketMedio = CalulosFinanceiros.calcularTicketMedio(receitaTotal, pedidosSingleton);
-    double tempoMedioPreparo = CalculoTempo.calcularTempoMedioPreparo(pedidosSingleton);
+    Map<String, Long> itensVendidos = CalulosFinanceiros.calularItensVendidos(pedidosSingleton);
 
-    exibirDetalhesPedidosConcluidos(itensVendidos);
-    exibirResumoBalanco(receitaTotal, ticketMedio, tempoMedioPreparo, itensVendidos);
+    String resumoBalanco = obterResumoBalanco(receitaTotal, ticketMedio, itensVendidos);
+
+    JOptionPane.showMessageDialog(null, resumoBalanco, "Resumo do Balanço", JOptionPane.INFORMATION_MESSAGE);
   }
 
-  private void exibirDetalhesPedidosConcluidos(Map<String, Long> itensVendidos) {
-    System.out.println("Detalhes dos pedidos concluídos:");
+  private String obterDetalhesPedidosConcluidos(Map<String, Long> itensVendidos) {
+    StringBuilder detalhes = new StringBuilder("Detalhes dos pedidos concluídos:\n");
     for (Pedido pedido : pedidosSingleton.getPedidosConcluidos()) {
-      System.out.println("- Número do Pedido: " + pedido.getNumeroPedido());
-      System.out.println("  Descrição:");
-      pedido.exibirDetalhes();
-      System.out.println("  Valor Total: R$ " + String.format("%.2f", pedido.getPrecoTotal()));
-      System.out.println();
+      detalhes.append("- Número do Pedido: ").append(pedido.getNumeroPedido()).append("\n");
+      detalhes.append("  Descrição:\n");
+      detalhes.append(pedido.exibirDetalhes());
+      detalhes.append("  Valor Total: R$ ").append(String.format("%.2f", pedido.getPrecoTotal())).append("\n\n");
     }
+    return detalhes.toString();
   }
 
-  private void exibirResumoBalanco(double receitaTotal, double ticketMedio, double tempoMedioPreparo,
+  private String obterResumoBalanco(double receitaTotal, double ticketMedio,
       Map<String, Long> itensVendidos) {
-    System.out.println("Resumo do Balanço:");
-    System.out.println("Número de pedidos concluídos: " + pedidosSingleton.getPedidosConcluidos().size());
-    System.out.println("Receita total: R$ " + String.format("%.2f", receitaTotal));
-    System.out.println("Ticket médio: R$ " + String.format("%.2f", ticketMedio));
-    System.out.println("Tempo médio de preparo: " + String.format("%.2f", tempoMedioPreparo) + " segundos.");
-    System.out.println("Itens mais vendidos:");
-    itensVendidos.forEach((item, quantidade) -> System.out.println("- " + item + ": " + quantidade + " vendidos."));
+    StringBuilder resumo = new StringBuilder("Resumo do Balanço:\n");
+    resumo.append("Número de pedidos concluídos: ").append(pedidosSingleton.getPedidosConcluidos().size()).append("\n");
+    resumo.append("Receita total: R$ ").append(String.format("%.2f", receitaTotal)).append("\n");
+    resumo.append("Ticket médio: R$ ").append(String.format("%.2f", ticketMedio)).append("\n");
+    resumo.append("Itens mais vendidos:\n");
+    itensVendidos.forEach(
+        (item, quantidade) -> resumo.append("- ").append(item).append(": ").append(quantidade).append(" vendidos.\n"));
+    return resumo.toString();
   }
 }

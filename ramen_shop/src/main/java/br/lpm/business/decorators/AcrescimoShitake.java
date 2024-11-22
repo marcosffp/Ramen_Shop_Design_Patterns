@@ -9,9 +9,8 @@ public class AcrescimoShitake extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de shitake.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de shitake.";
   }
 
 

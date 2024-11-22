@@ -10,9 +10,8 @@ public class AcrescimoChilli extends AcrescimoDecorator {
   }
 
   @Override
-  public void exibirDetalhes() {
-    super.exibirDetalhes();
-    System.out.println("Com acréscimo de Chilli.");
+  public String exibirDetalhes() {
+    return super.exibirDetalhes() + " com acréscimo de Chilli.";
   }
 
   @Override
