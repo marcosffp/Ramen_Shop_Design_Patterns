@@ -8,7 +8,7 @@ import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.repository.ImplPedidoRepositorio;
 import br.lpm.business.repository.PedidoRepository;
 import br.lpm.business.services.GerenciamentoPedido;
-import br.lpm.business.services.ImplGerencimanetoPedido;
+import br.lpm.business.services.ImplGerenciamentoPedido;
 import br.lpm.main.controlador.ControladorPedido;
 
 
@@ -23,7 +23,7 @@ public class Main extends JFrame {
 
         PedidosSingleton pedidosSingleton = PedidosSingleton.getInstancia();
         PedidoRepository pedidoRepository = new ImplPedidoRepositorio();
-        GerenciamentoPedido gerenciamentoPedido = new ImplGerencimanetoPedido(pedidosSingleton, pedidoRepository);
+        GerenciamentoPedido gerenciamentoPedido = new ImplGerenciamentoPedido(pedidosSingleton, pedidoRepository);
         PedidoFactory ramenFactory = new PedidoFactory();
         controladorPedido = new ControladorPedido(pedidosSingleton, gerenciamentoPedido, ramenFactory);
 

@@ -6,9 +6,9 @@ import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.repository.PedidoRepository;
 
 
-public class ImplGerencimanetoPedido extends GerenciamentoPedido {
+public class ImplGerenciamentoPedido extends GerenciamentoPedido {
 
-  public ImplGerencimanetoPedido(PedidosSingleton pedidosSingleton, PedidoRepository pedidoRepository) {
+  public ImplGerenciamentoPedido(PedidosSingleton pedidosSingleton, PedidoRepository pedidoRepository) {
     super(pedidosSingleton, pedidoRepository);
   }
 

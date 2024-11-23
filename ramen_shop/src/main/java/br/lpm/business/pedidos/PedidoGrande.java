@@ -53,4 +53,9 @@ public class PedidoGrande implements Pedido {
     };
   }
 
+  @Override
+  public int getQuantidadeItens() {
+    return 1;
+  }
+
 }

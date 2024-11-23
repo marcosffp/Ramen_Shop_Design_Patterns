@@ -52,4 +52,9 @@ public class PedidoMedio implements Pedido {
       default -> PRECO_BASE;
     };
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return 1;
+  }
 }

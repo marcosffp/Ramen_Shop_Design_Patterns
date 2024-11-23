@@ -17,5 +17,10 @@ public class BebidaRefrigerante extends BebidaDecorator {
   public double getPrecoTotal() {
     return super.getPrecoTotal() + PRECO_REFRIGERANTE;
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
   
 }

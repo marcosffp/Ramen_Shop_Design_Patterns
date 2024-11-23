@@ -19,4 +19,9 @@ public class AcrescimoShitake extends AcrescimoDecorator {
   public double getPrecoTotal() {
     return super.getPrecoTotal() + PRECO_SHITAKE;
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
 }

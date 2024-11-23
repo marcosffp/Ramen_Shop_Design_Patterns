@@ -19,4 +19,9 @@ public class AcrescimoCremeAlho extends AcrescimoDecorator {
   public double getPrecoTotal() {
     return super.getPrecoTotal() + PRECO_CREME_ALHO;
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
 }

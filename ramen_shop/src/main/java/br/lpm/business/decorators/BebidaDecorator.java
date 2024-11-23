@@ -34,4 +34,9 @@ public abstract class BebidaDecorator implements Pedido {
   public String getSenhaCliente() {
     return pedido.getSenhaCliente();
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return pedido.getQuantidadeItens();
+  }
 }

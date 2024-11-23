@@ -52,4 +52,10 @@ public class BebidaKoChaTest {
     String senhaCliente = decorator.getSenhaCliente();
     assertEquals("1234", senhaCliente, "Testando se a senha do cliente é a mesma do pedido base.");
   }
+
+  @Test
+  void testGetQuantidadeItens() {
+    int quantidadeItens = decorator.getQuantidadeItens();
+    assertEquals(2, quantidadeItens, "Testando se a quantidade de itens permanece a mesma.");
+  }
 }

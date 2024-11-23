@@ -20,4 +20,9 @@ public class AcrescimoProteinaExtra extends AcrescimoDecorator {
     return super.getPrecoTotal() + PRECO_PROTEINA_EXTRA;
   }
 
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
+
 }

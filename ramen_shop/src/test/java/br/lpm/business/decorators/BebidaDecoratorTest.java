@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import br.lpm.business.pedidos.PedidoPequeno;
 import br.lpm.business.utils.GeradorIdPedido;
 
-public class AcrescimoRefrigeranteTest {
+public class BebidaDecoratorTest {
 
   private BebidaDecorator decorator;
   private PedidoPequeno pedidoBase;
@@ -54,5 +54,11 @@ public class AcrescimoRefrigeranteTest {
   void testGetSenhaCliente() {
     String senhaCliente = decorator.getSenhaCliente();
     assertEquals("1234", senhaCliente, "Testando se a senha do cliente é a mesma do pedido base.");
+  }
+
+  @Test
+  void testGetQuantidadeItens() {
+    int quantidadeItens = decorator.getQuantidadeItens();
+    assertEquals(2, quantidadeItens, "Testando se a quantidade de itens é a mesma do pedido base.");
   }
 }

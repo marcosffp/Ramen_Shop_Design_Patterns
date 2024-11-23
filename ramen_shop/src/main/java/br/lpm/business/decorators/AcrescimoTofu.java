@@ -19,4 +19,9 @@ public class AcrescimoTofu extends AcrescimoDecorator {
   public double getPrecoTotal() {
     return super.getPrecoTotal() + PRECO_TOFU;
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
 }

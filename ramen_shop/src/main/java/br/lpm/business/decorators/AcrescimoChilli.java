@@ -18,4 +18,9 @@ public class AcrescimoChilli extends AcrescimoDecorator {
     public double getPrecoTotal() {
         return super.getPrecoTotal() + PRECO_CHILLI;
     }
+
+    @Override
+    public int getQuantidadeItens() {
+        return super.getQuantidadeItens()+1;
+    }
 }

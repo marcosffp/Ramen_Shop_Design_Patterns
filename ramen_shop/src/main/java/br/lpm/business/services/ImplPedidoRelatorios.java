@@ -1,5 +1,7 @@
 package br.lpm.business.services;
 
+import java.util.Map;
+
 import javax.swing.JOptionPane;
 
 import br.lpm.business.model.Pedido;
@@ -39,33 +41,44 @@ public class ImplPedidoRelatorios extends PedidoRelatorios{
 
   @Override
   public void exibirResumoBalanco() {
-    double receitaTotal = CalulosFinanceiros.calcularReceitaTotal(super.getPedidosSingleton());
-    double ticketMedio = CalulosFinanceiros.calcularTicketMedio(receitaTotal, super.getPedidosSingleton());
+    PedidosSingleton pedidosSingleton = super.getPedidosSingleton();
+    double receitaTotal = CalulosFinanceiros.calcularReceitaTotal(pedidosSingleton);
+    double ticketMedio = CalulosFinanceiros.calcularTicketMedio(receitaTotal, pedidosSingleton);
+    double ticketUltimoPedido = CalulosFinanceiros.calcularTicketUltimoPedido(pedidosSingleton);
 
-    String resumoBalanco = obterResumoBalanco(receitaTotal, ticketMedio);
+    String resumoBalanco = obterResumoBalanco(receitaTotal, ticketMedio, ticketUltimoPedido);
 
     JOptionPane.showMessageDialog(null, resumoBalanco, "Resumo do Balanço", JOptionPane.INFORMATION_MESSAGE);
   }
 
-  @Override
-  public String obterDetalhesPedidosConcluidos() {
+@Override
+public String obterDetalhesPedidosConcluidos() {
+    PedidosSingleton pedidosSingleton = super.getPedidosSingleton();
+    Map<Integer, Double> ticketMedioPorPedido = CalulosFinanceiros.calcularTicketMedioPorPedido(pedidosSingleton);
+
     StringBuilder detalhes = new StringBuilder("Detalhes dos pedidos concluídos:\n");
-    for (Pedido pedido : super.getPedidosSingleton().getPedidosConcluidos()) {
-      detalhes.append("- Número do Pedido: ").append(pedido.getNumeroPedido()).append("\n");
-      detalhes.append("  Descrição:\n");
-      detalhes.append(pedido.exibirDetalhes());
-      detalhes.append("  Valor Total: R$ ").append(String.format("%.2f", pedido.getPrecoTotal())).append("\n\n");
+    for (Pedido pedido : pedidosSingleton.getPedidosConcluidos()) {
+        detalhes.append("- Número do Pedido: ").append(pedido.getNumeroPedido()).append("\n");
+        detalhes.append("  Descrição:\n");
+        detalhes.append(pedido.exibirDetalhes());
+        detalhes.append("  Valor Total: R$ ").append(String.format("%.2f", pedido.getPrecoTotal())).append("\n");
+        detalhes.append("  Ticket Médio (por item): R$ ")
+              .append(String.format("%.2f", ticketMedioPorPedido.getOrDefault(pedido.getNumeroPedido(), 0.0)))
+              .append("\n\n");
     }
     return detalhes.toString();
-  }
+}
+
 
   @Override
-  public String obterResumoBalanco(double receitaTotal, double ticketMedio) {
+  public String obterResumoBalanco(double receitaTotal, double ticketMedio, double ticketUltimoPedido) {
     StringBuilder resumo = new StringBuilder("Resumo do Balanço:\n");
-    resumo.append("Número de pedidos concluídos: ").append(
-        super.getPedidosSingleton().getPedidosConcluidos().size()).append("\n");
+    resumo.append("Número de pedidos concluídos: ")
+        .append(super.getPedidosSingleton().getPedidosConcluidos().size()).append("\n");
     resumo.append("Receita total: R$ ").append(String.format("%.2f", receitaTotal)).append("\n");
-    resumo.append("Ticket médio: R$ ").append(String.format("%.2f", ticketMedio)).append("\n");
+    resumo.append("Ticket do último pedido: R$ ").append(String.format("%.2f", ticketUltimoPedido)).append("\n");
+    resumo.append("Ticket Médio Geral: R$ ").append(String.format("%.2f", ticketMedio)).append("\n");
     return resumo.toString();
   }
+
 }

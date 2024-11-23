@@ -24,7 +24,7 @@ public class ImplGerencimanetoPedidoTest {
     pedido2 = new PedidoMedio("PORCO", "Jamilly", "2345");
     pedidosSingleton.getListaPedidos().add(pedido1);
     pedidosSingleton.getListaPedidos().add(pedido2);
-    gerenciamentoPedido = new ImplGerencimanetoPedido(pedidosSingleton, new ImplPedidoRepositorio());
+    gerenciamentoPedido = new ImplGerenciamentoPedido(pedidosSingleton, new ImplPedidoRepositorio());
   }
   
   @Test

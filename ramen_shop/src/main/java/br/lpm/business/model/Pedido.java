@@ -11,4 +11,6 @@ public interface Pedido {
 
   public String getSenhaCliente();
 
+  public int getQuantidadeItens();
+
 }

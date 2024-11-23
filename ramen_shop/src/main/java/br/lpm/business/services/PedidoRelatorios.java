@@ -20,7 +20,7 @@ public abstract class PedidoRelatorios {
 
   public abstract String obterDetalhesPedidosConcluidos();
 
-  public abstract String obterResumoBalanco(double receitaTotal, double ticketMedio);
+  public abstract String obterResumoBalanco(double receitaTotal, double ticketMedio, double ticketUltimoPedido);
   
   public PedidosSingleton getPedidosSingleton() {
     return pedidosSingleton;

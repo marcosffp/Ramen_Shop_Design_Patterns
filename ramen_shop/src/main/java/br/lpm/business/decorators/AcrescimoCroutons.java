@@ -19,5 +19,10 @@ public class AcrescimoCroutons extends AcrescimoDecorator {
   public double getPrecoTotal() {
     return super.getPrecoTotal() + PRECO_CROUTONS;
   }
+
+  @Override
+  public int getQuantidadeItens() {
+    return super.getQuantidadeItens() + 1;
+  }
   
 }
