@@ -16,10 +16,9 @@ public final class CalulosFinanceiros {
   }
 
   public static double calcularTicketMedio(double receitaTotal, PedidosSingleton pedidosSingleton) {
-    long totalPedidos = pedidosSingleton.getPedidosConcluidos()
-        .stream()
-        .count();
-    return totalPedidos > 0 ? receitaTotal / totalPedidos : 0;
+    Integer quantidadesItensTotal = pedidosSingleton.getPedidosConcluidos().stream()
+        .mapToInt(Pedido::getQuantidadeItens).sum();
+    return quantidadesItensTotal > 0 ? receitaTotal / quantidadesItensTotal : 0;
   }
 
   public static Map<Integer, Double> calcularTicketMedioPorPedido(PedidosSingleton pedidosSingleton) {
