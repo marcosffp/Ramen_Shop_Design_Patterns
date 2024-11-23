@@ -24,7 +24,7 @@ public abstract class GerenciamentoPedido {
 
   public abstract void adicionarPedido(Pedido pedido);
 
-  public abstract void retirarPedidoCozinha(int numeroPedido);
+  public abstract Pedido retirarPedidoCozinha(int numeroPedido);
 
   public abstract void retirarPedido(String senha);
 

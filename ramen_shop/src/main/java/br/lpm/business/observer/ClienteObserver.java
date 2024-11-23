@@ -1,5 +1,7 @@
 package br.lpm.business.observer;
 
+import javax.swing.JOptionPane;
+
 import br.lpm.business.model.Pedido;
 
 public class ClienteObserver extends Observer {
@@ -15,15 +17,35 @@ public class ClienteObserver extends Observer {
   @Override
   public void atualizar() {
     Pedido pedidoPronto = (Pedido) subject.getPedidoPronto();
+
+    if (pedidoPronto == null) {
+      JOptionPane.showMessageDialog(
+          null,
+          "Erro: Nenhum pedido está pronto para ser notificado.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+
     if (senhaCliente.equals(pedidoPronto.getSenhaCliente())) {
-      System.out.println("Notificação para " + nomeCliente + ":");
-      System.out.println("Seu pedido está pronto!");
-      System.out.println("Detalhes do Pedido:");
-      System.out.println("- Número: " + pedidoPronto.getNumeroPedido());
-      System.out.println("- Cliente: " + pedidoPronto.getNomeCliente());
-      System.out.println("- Valor Total: R$ " + pedidoPronto.getPrecoTotal());
+
+      String resumoPedido = String.format(
+          "Pedido Pronto!\n\nCliente: %s\nNúmero do Pedido: %d\nValor Total: R$ %.2f",
+          pedidoPronto.getNomeCliente(),
+          pedidoPronto.getNumeroPedido(),
+          pedidoPronto.getPrecoTotal());
+
+      JOptionPane.showMessageDialog(
+          null,
+          resumoPedido,
+          "Notificação do cliente",
+          JOptionPane.INFORMATION_MESSAGE);
     } else {
-      System.out.println("Erro: Pedido não corresponde ao cliente.");
+      JOptionPane.showMessageDialog(
+          null,
+          "Erro: Pedido não corresponde ao cliente.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE);
     }
   }
 

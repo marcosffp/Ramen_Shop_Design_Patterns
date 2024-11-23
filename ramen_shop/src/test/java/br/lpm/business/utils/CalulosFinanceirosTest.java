@@ -10,6 +10,7 @@ import br.lpm.business.pedidos.PedidoMedio;
 import br.lpm.business.pedidos.PedidoPequeno;
 import br.lpm.business.pedidos.PedidosSingleton;
 
+import java.util.Map;
 
 public class CalulosFinanceirosTest {
 
@@ -21,8 +22,10 @@ public class CalulosFinanceirosTest {
   public void setUp() {
     pedidosSingleton = PedidosSingleton.getInstancia();
     pedidosSingleton.getPedidosConcluidos().clear();
+
     pedido1 = new PedidoPequeno("BOI", "Marcos", "1234");
     pedido2 = new PedidoMedio("PORCO", "Jamilly", "2345");
+
     pedidosSingleton.getPedidosConcluidos().add(pedido1);
     pedidosSingleton.getPedidosConcluidos().add(pedido2);
   }
@@ -30,7 +33,7 @@ public class CalulosFinanceirosTest {
   @Test
   void testCalcularReceitaTotal() {
     double receitaTotal = CalulosFinanceiros.calcularReceitaTotal(pedidosSingleton);
-    double expected=pedido1.getPrecoTotal()+pedido2.getPrecoTotal();
+    double expected = pedido1.getPrecoTotal() + pedido2.getPrecoTotal();
     assertEquals(expected, receitaTotal, 0.01, "Testando o cálculo da receita total");
   }
 
@@ -41,4 +44,26 @@ public class CalulosFinanceirosTest {
     double expected = receitaTotal / pedidosSingleton.getPedidosConcluidos().size();
     assertEquals(expected, ticketMedio, 0.01, "Testando o cálculo do ticket médio");
   }
+
+  @Test
+  void testCalcularTicketMedioPorPedido() {
+    Map<Integer, Double> ticketMedioPorPedido = CalulosFinanceiros.calcularTicketMedioPorPedido(pedidosSingleton);
+
+    double ticketMedioPedido1 = pedido1.getPrecoTotal() / (double) pedido1.getQuantidadeItens();
+    double ticketMedioPedido2 = pedido2.getPrecoTotal() / (double) pedido2.getQuantidadeItens();
+
+    assertEquals(ticketMedioPedido1, ticketMedioPorPedido.get(pedido1.getNumeroPedido()), 0.01,
+        "Testando ticket médio do pedido 1");
+    assertEquals(ticketMedioPedido2, ticketMedioPorPedido.get(pedido2.getNumeroPedido()), 0.01,
+        "Testando ticket médio do pedido 2");
+  }
+
+  @Test
+  void testCalcularTicketUltimoPedido() {
+    double ticketUltimoPedido = CalulosFinanceiros.calcularTicketUltimoPedido(pedidosSingleton);
+
+    double expected = pedido2.getPrecoTotal() / (double) pedido2.getQuantidadeItens();
+    assertEquals(expected, ticketUltimoPedido, 0.01, "Testando o cálculo do ticket do último pedido");
+  }
+
 }

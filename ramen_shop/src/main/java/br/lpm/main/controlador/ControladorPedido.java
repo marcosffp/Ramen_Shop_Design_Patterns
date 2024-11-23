@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import br.lpm.business.decorators.*;
 import br.lpm.business.model.Pedido;
+import br.lpm.business.observer.ClienteObserver;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.services.GerenciamentoPedido;
@@ -67,7 +68,8 @@ public class ControladorPedido {
       case 6 -> exibirDetalhesBalanco(relatorios);
       case 7 -> JOptionPane.showMessageDialog(frame, "Encerrando sistema. Até a próxima!", "Saída",
           JOptionPane.INFORMATION_MESSAGE);
-      default -> JOptionPane.showMessageDialog(frame, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+      default ->
+        JOptionPane.showMessageDialog(frame, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
     }
   }
 
@@ -131,6 +133,12 @@ public class ControladorPedido {
       pedido = adicionarAcrecimos(pedido);
       pedido = adicionarBebida(pedido);
       gerenciamentoPedido.adicionarPedido(pedido);
+
+      pedidosSingleton.getCozinha().registrarObservador(new ClienteObserver(
+          pedidosSingleton.getCozinha(),
+          pedido.getNomeCliente(),
+          pedido.getSenhaCliente()));
+
       exibirInformacoesPedido(pedido);
     } catch (IllegalArgumentException e) {
       JOptionPane.showMessageDialog(frame, "Erro ao criar pedido: " + e.getMessage(), "Erro",
@@ -300,11 +308,7 @@ public class ControladorPedido {
   }
 
   private void retirarPedidoCozinha() {
-    if (pedidosSingleton.getCozinha().getPedidoPronto() == null) {
-      JOptionPane.showMessageDialog(frame, "Nenhum pedido disponível na cozinha para retirada.", "Erro",
-          JOptionPane.ERROR_MESSAGE);
-      return;
-    }
+    Pedido pedido = null;
     try {
       String numeroPedidoStr = JOptionPane.showInputDialog(frame, "Informe o número do pedido para confirmar retirada:",
           "Retirar Pedido da Cozinha", JOptionPane.QUESTION_MESSAGE);
@@ -314,7 +318,7 @@ public class ControladorPedido {
       }
 
       int numeroPedido = Integer.parseInt(numeroPedidoStr);
-      gerenciamentoPedido.retirarPedidoCozinha(numeroPedido);
+      pedido=gerenciamentoPedido.retirarPedidoCozinha(numeroPedido);
       JOptionPane.showMessageDialog(frame, "Pedido retirado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     } catch (NumberFormatException e) {
       JOptionPane.showMessageDialog(frame, "Número do pedido inválido. Tente novamente.", "Erro",
@@ -323,6 +327,8 @@ public class ControladorPedido {
       JOptionPane.showMessageDialog(frame, "Erro ao retirar pedido: " + e.getMessage(), "Erro",
           JOptionPane.ERROR_MESSAGE);
     }
+
+    pedidosSingleton.getCozinha().setPedidoPronto(pedido);
   }
 
   private void retirarPedido() {
@@ -347,8 +353,7 @@ public class ControladorPedido {
         JOptionPane.QUESTION_MESSAGE,
         null,
         new Object[] { "Sim", "Não" },
-        "Sim"
-    );
+        "Sim");
 
     if (resposta == JOptionPane.YES_OPTION) {
       JOptionPane.showMessageDialog(frame, "Pagamento confirmado. Pode retirar seu pedido.", "Informação",

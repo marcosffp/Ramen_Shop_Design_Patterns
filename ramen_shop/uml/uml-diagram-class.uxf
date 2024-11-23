@@ -268,7 +268,7 @@ GeradorSenha
 - GeradorSenha()
 _+ gerarSenha(): String_
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1578</x><y>642</y><w>324</w><h>102</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
-br.lpm.business.utils
+br.lpm.business.utils.
 CalulosFinanceiros
 --
 - CalulosFinanceiros()
