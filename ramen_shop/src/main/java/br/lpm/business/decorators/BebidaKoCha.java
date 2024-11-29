@@ -1,9 +1,9 @@
 package br.lpm.business.decorators;
 
 import br.lpm.business.model.Pedido;
+import br.lpm.business.model.enums.Bebida;
 
 public class BebidaKoCha extends BebidaDecorator {
-  private static final double PRECO_KOCHA = 0.00;
   public BebidaKoCha(Pedido pedido) {
     super(pedido);
   }
@@ -16,11 +16,7 @@ public class BebidaKoCha extends BebidaDecorator {
 
   @Override
   public double getPrecoTotal() {
-    return super.getPrecoTotal() + PRECO_KOCHA;
+    return super.getPrecoTotal() + Bebida.KO_CHA.getPreco();
   }
 
-  @Override
-  public int getQuantidadeItens() {
-    return super.getQuantidadeItens() + 1;
-  }
 }

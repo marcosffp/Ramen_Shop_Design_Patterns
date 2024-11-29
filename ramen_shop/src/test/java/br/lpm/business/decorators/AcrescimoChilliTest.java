@@ -4,21 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import br.lpm.business.model.Pedido;
 import br.lpm.business.pedidos.PedidoPequeno;
-import br.lpm.business.utils.GeradorIdPedido;
+import br.lpm.business.util.GeradorIdPedido;
+import br.lpm.business.model.enums.Acrescimo;
+import br.lpm.business.model.enums.Proteina;
+import br.lpm.business.model.enums.Tamanho;
+
 
 public class AcrescimoChilliTest {
 
-  private AcrescimoDecorator decorator;
-  private Pedido pedidoBase;
+  private AcrescimoChilli decorator;
+  private PedidoPequeno pedidoBase;
 
   @BeforeEach
   void setUp() {
-
     GeradorIdPedido.reset();
-    pedidoBase = new PedidoPequeno("BOI", "Marcos", "1234");
+    pedidoBase = new PedidoPequeno("Marcos", Tamanho.PEQUENO, Proteina.BOI);
     decorator = new AcrescimoChilli(pedidoBase);
   }
 
@@ -28,39 +29,27 @@ public class AcrescimoChilliTest {
     assertEquals(
         "Pedido Pequeno com proteina: BOI com acréscimo de Chilli.",
         detalhes,
-        "Testando se o acréscimo de Chilli foi aplicado corretamente.");
-  }
-
-  @Test
-  void testGetNomeCliente() {
-    String nomeCliente = decorator.getNomeCliente();
-    assertEquals("Marcos", nomeCliente, "Testando se o nome do cliente é o mesmo do pedido base.");
-  }
-
-  @Test
-  void testGetNumeroPedido() {
-    int numeroPedido = decorator.getNumeroPedido();
-    assertEquals(1, numeroPedido, "Testando se o número do pedido é o mesmo do pedido base.");
+        "Testando se o acréscimo de Chilli foi aplicado corretamente");
   }
 
   @Test
   void testGetPrecoTotal() {
     double precoTotal = decorator.getPrecoTotal();
     assertEquals(
-        pedidoBase.getPrecoTotal() + 2.50,
+        pedidoBase.getPrecoTotal() + Acrescimo.CHILLI.getPreco(),
         precoTotal,
-        "Testando se o preço total é o mesmo do pedido base mais o acréscimo de Chilli.");
+        "Testando se o preço total está correto após o acréscimo de Chilli");
   }
 
   @Test
-  void testGetSenhaCliente() {
-    String senhaCliente = decorator.getSenhaCliente();
-    assertEquals("1234", senhaCliente, "Testando se a senha do cliente é a mesma do pedido base.");
+  void testGetNomeCliente() {
+    String nomeCliente = decorator.getNomeCliente();
+    assertEquals("Marcos", nomeCliente, "Testando se o nome do cliente é o mesmo do pedido base");
   }
 
   @Test
-  void testGetQuantidadeItens() {
-    int quantidadeItens = decorator.getQuantidadeItens();
-    assertEquals(2, quantidadeItens, "Testando se a quantidade de itens é a mesma do pedido base mais o acréscimo de Chilli.");
+  void testGetNumeroPedido() {
+    int numeroPedido = decorator.getNumeroPedido();
+    assertEquals(1, numeroPedido, "Testando se o número do pedido é o mesmo do pedido base");
   }
 }

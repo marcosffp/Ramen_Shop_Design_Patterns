@@ -1,40 +1,21 @@
 package br.lpm.business.observer;
 
-import br.lpm.business.model.Pedido;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
-  private final List<Observer> observadores = new ArrayList<>();
-  private Pedido pedidoPronto;
+import br.lpm.business.exception.RamenShopException;
+import br.lpm.business.model.Pedido;
 
-  public Pedido getPedidoPronto() {
-    return pedidoPronto;
-  }
+public interface Subject {
 
-  public void setPedidoPronto(Pedido pedidoPronto) {
-    if (pedidoPronto != null && !pedidoPronto.equals(this.pedidoPronto)) {
-      this.pedidoPronto = pedidoPronto;
-      notificarObservadores();
-    }
-  }
+  public void setPedidoPronto(Pedido pedidoPronto) throws RamenShopException;
 
-  public void registrarObservador(Observer observer) {
-    if (!observadores.contains(observer)) {
-      observadores.add(observer);
-    }
-  }
+  public Pedido getPedidoPronto();
 
-  public void removerObservador(Observer observador) {
-    observadores.remove(observador);
-  }
+  public void registrarObservador(Observer observer) throws RamenShopException;
 
-  private void notificarObservadores() {
-    observadores.forEach(Observer::atualizar);
-  }
+  public void notificarObservadores() throws RamenShopException;
 
-  public List<Observer> getObservadores() {
-    return observadores;
-  }
+  public Pedido retirarPedidoPronto() throws RamenShopException;
+
+   public List<Observer> getObservadores();
 }

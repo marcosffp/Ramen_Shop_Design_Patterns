@@ -1,9 +1,9 @@
 package br.lpm.business.decorators;
 
 import br.lpm.business.model.Pedido;
+import br.lpm.business.model.enums.Acrescimo;
 
 public class AcrescimoShitake extends AcrescimoDecorator {
-  private static final double PRECO_SHITAKE = 6.90;
   public AcrescimoShitake(Pedido pedido) {
     super(pedido);
   }
@@ -17,11 +17,7 @@ public class AcrescimoShitake extends AcrescimoDecorator {
 
   @Override
   public double getPrecoTotal() {
-    return super.getPrecoTotal() + PRECO_SHITAKE;
+    return super.getPrecoTotal() + Acrescimo.SHITAKE.getPreco();
   }
 
-  @Override
-  public int getQuantidadeItens() {
-    return super.getQuantidadeItens() + 1;
-  }
 }

@@ -2,28 +2,14 @@ package br.lpm.business.decorators;
 
 import br.lpm.business.model.Pedido;
 
-public abstract class AcrescimoDecorator implements Pedido {
+
+public abstract class AcrescimoDecorator extends Pedido {
   private final Pedido pedido;
 
   public AcrescimoDecorator(Pedido pedido) {
+    super(pedido.getNomeCliente(), pedido.getTamanhoPedido(), pedido.getProteinaPedido());
     this.pedido = pedido;
   }
-
-  @Override
-  public String getNomeCliente() {
-    return pedido.getNomeCliente();
-  }
-
-  @Override
-  public String exibirDetalhes() {
-    return pedido.exibirDetalhes();
-  }
-
-  @Override
-  public double getPrecoTotal() {
-    return pedido.getPrecoTotal();
-  }
-
 
   @Override
   public int getNumeroPedido() {
@@ -31,12 +17,12 @@ public abstract class AcrescimoDecorator implements Pedido {
   }
 
   @Override
-  public String getSenhaCliente() {
-    return pedido.getSenhaCliente();
+  public double getPrecoTotal() {
+    return pedido.getPrecoTotal();
   }
 
   @Override
-  public int getQuantidadeItens() {
-    return pedido.getQuantidadeItens();
+  public String exibirDetalhes() {
+    return pedido.exibirDetalhes();
   }
 }

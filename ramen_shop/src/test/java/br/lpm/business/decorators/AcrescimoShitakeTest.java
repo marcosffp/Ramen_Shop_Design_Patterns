@@ -4,20 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import br.lpm.business.model.Pedido;
 import br.lpm.business.pedidos.PedidoPequeno;
-import br.lpm.business.utils.GeradorIdPedido;
+import br.lpm.business.util.GeradorIdPedido;
+import br.lpm.business.model.enums.Acrescimo;
+import br.lpm.business.model.enums.Proteina;
+import br.lpm.business.model.enums.Tamanho;
 
 public class AcrescimoShitakeTest {
 
-  private AcrescimoDecorator decorator;
-  private Pedido pedidoBase;
+  private AcrescimoShitake decorator;
+  private PedidoPequeno pedidoBase;
 
   @BeforeEach
   void setUp() {
     GeradorIdPedido.reset();
-    pedidoBase = new PedidoPequeno("BOI", "Marcos", "1234");
+    pedidoBase = new PedidoPequeno("Marcos", Tamanho.PEQUENO, Proteina.BOI);
     decorator = new AcrescimoShitake(pedidoBase);
   }
 
@@ -27,39 +28,27 @@ public class AcrescimoShitakeTest {
     assertEquals(
         "Pedido Pequeno com proteina: BOI com acréscimo de shitake.",
         detalhes,
-        "Testando se o acréscimo de shitake foi aplicado corretamente.");
-  }
-
-  @Test
-  void testGetNomeCliente() {
-    String nomeCliente = decorator.getNomeCliente();
-    assertEquals("Marcos", nomeCliente, "Testando se o nome do cliente é o mesmo do pedido base.");
-  }
-
-  @Test
-  void testGetNumeroPedido() {
-    int numeroPedido = decorator.getNumeroPedido();
-    assertEquals(1, numeroPedido, "Testando se o número do pedido é o mesmo do pedido base.");
+        "Testando se o acréscimo de shitake foi aplicado corretamente");
   }
 
   @Test
   void testGetPrecoTotal() {
     double precoTotal = decorator.getPrecoTotal();
     assertEquals(
-        pedidoBase.getPrecoTotal() + 6.90,
+        pedidoBase.getPrecoTotal() + Acrescimo.SHITAKE.getPreco(),
         precoTotal,
-        "Testando se o preço total é o mesmo do pedido base mais o acréscimo de shitake.");
+        "Testando se o preço total está correto após o acréscimo de shitake");
   }
 
   @Test
-  void testGetSenhaCliente() {
-    String senhaCliente = decorator.getSenhaCliente();
-    assertEquals("1234", senhaCliente, "Testando se a senha do cliente é a mesma do pedido base.");
+  void testGetNomeCliente() {
+    String nomeCliente = decorator.getNomeCliente();
+    assertEquals("Marcos", nomeCliente, "Testando se o nome do cliente é o mesmo do pedido base");
   }
 
   @Test
-  void testGetQuantidadeItens() {
-    int quantidadeItens = decorator.getQuantidadeItens();
-    assertEquals(2, quantidadeItens, "Testando se a quantidade de itens é a mesma do pedido base.");
+  void testGetNumeroPedido() {
+    int numeroPedido = decorator.getNumeroPedido();
+    assertEquals(1, numeroPedido, "Testando se o número do pedido é o mesmo do pedido base");
   }
 }
