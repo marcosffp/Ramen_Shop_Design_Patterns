@@ -4,14 +4,14 @@ import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import br.lpm.business.balanco.GerenciamentoPedido;
+import br.lpm.business.balanco.ImplPedidoRelatorios;
+import br.lpm.business.balanco.PedidoRelatorios;
 import br.lpm.business.decorators.*;
 import br.lpm.business.model.Pedido;
 import br.lpm.business.observer.ClienteObserver;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidosSingleton;
-import br.lpm.business.services.GerenciamentoPedido;
-import br.lpm.business.services.ImplPedidoRelatorios;
-import br.lpm.business.services.PedidoRelatorios;
 
 public class ControladorPedido {
   private final PedidosSingleton pedidosSingleton;

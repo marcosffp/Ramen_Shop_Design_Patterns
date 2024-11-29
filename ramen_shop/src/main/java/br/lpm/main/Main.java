@@ -3,12 +3,12 @@ package br.lpm.main;
 import javax.swing.*;
 import java.awt.GridLayout;
 
+import br.lpm.business.balanco.GerenciamentoPedido;
+import br.lpm.business.balanco.ImplGerenciamentoPedido;
 import br.lpm.business.pedidos.PedidoFactory;
 import br.lpm.business.pedidos.PedidosSingleton;
 import br.lpm.business.repository.ImplPedidoRepositorio;
 import br.lpm.business.repository.PedidoRepository;
-import br.lpm.business.services.GerenciamentoPedido;
-import br.lpm.business.services.ImplGerenciamentoPedido;
 import br.lpm.main.controlador.ControladorPedido;
 
 

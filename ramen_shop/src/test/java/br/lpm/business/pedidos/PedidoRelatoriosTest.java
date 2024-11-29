@@ -1,8 +1,8 @@
 package br.lpm.business.pedidos;
 
+import br.lpm.business.balanco.ImplPedidoRelatorios;
+import br.lpm.business.balanco.PedidoRelatorios;
 import br.lpm.business.model.Pedido;
-import br.lpm.business.services.ImplPedidoRelatorios;
-import br.lpm.business.services.PedidoRelatorios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

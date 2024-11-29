@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import br.lpm.business.balanco.GerenciamentoPedido;
+import br.lpm.business.balanco.ImplGerenciamentoPedido;
 import br.lpm.business.model.Pedido;
 import br.lpm.business.pedidos.PedidoMedio;
 import br.lpm.business.pedidos.PedidoPequeno;
