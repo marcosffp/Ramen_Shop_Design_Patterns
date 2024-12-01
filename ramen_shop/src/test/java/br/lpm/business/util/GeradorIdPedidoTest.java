@@ -34,5 +34,4 @@ class GeradorIdPedidoTest {
     assertEquals(1, id1, "Testando se o primeiro ID após o reset é 1");
     assertEquals(2, id2, "Testando se o segundo ID após o reset é 2");
   }
-
 }

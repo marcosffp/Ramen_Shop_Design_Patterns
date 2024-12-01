@@ -1,6 +1,7 @@
 package br.lpm.business.observer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,4 +61,11 @@ public class ClienteObserverTest {
     assertEquals("Marcos", clienteObserver.getNomeCliente(), "Testando se o nome do cliente está correto");
   }
 
+  @Test
+  void testSetPedidoProntoComStatusInvalido() {
+    pedido.setStatusPedido(Status.PENDENTE);
+    RamenShopException exception = assertThrows(RamenShopException.class, () -> subject.setPedidoPronto(pedido));
+    assertEquals("O pedido deve estar com status EM_PREPARO para ser concluído. Status atual: PENDENTE", exception.getMessage(),
+        "Testando se o status do pedido é inválido");
+  }
 }

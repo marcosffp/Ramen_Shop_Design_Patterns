@@ -25,7 +25,7 @@ public class Balanco {
 
     if (pedido.getStatusPedido() != Status.RETIRADO) {
       throw new RamenShopException(
-          "O pedido deve estar com status PENDENTE para ser concluído. Status atual: "
+          "O pedido deve estar com status RETIRADO para ser concluído. Status atual: "
               + pedido.getStatusPedido());
     }
     pedidosConcluidos.add(pedido);
@@ -36,8 +36,8 @@ public class Balanco {
       throw new RamenShopException("O pedido não pode ser nulo.");
     }
 
-    if (!pedidosConcluidos.contains(pedido)) {
-      throw new RamenShopException("O pedido não está na lista de pedidos concluídos.");
+    if (!pedidosConcluidos.remove(pedido)) {
+      throw new RamenShopException("Pedido concluído não encontrado.");
     }
 
     pedidosConcluidos.remove(pedido);
@@ -78,5 +78,13 @@ public class Balanco {
     relatorio.append("\nTicket Médio: R$ ").append(String.format("%.2f", ticketMedio));
 
     return relatorio.toString();
+  }
+
+  public void removerTodosPedidosConcluidos() {
+    pedidosConcluidos.clear();
+  }
+
+  public int getQuantidadePedidosConcluidos() {
+    return pedidosConcluidos.size();
   }
 }

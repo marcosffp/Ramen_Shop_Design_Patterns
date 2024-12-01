@@ -23,7 +23,7 @@ public class BebidaDecoratorTest {
     decorator = new BebidaDecorator(pedidoBase) {
       @Override
       public String exibirDetalhes() {
-        return pedidoBase.exibirDetalhes() + " com acréscimo de refrigerante.";
+        return pedidoBase.exibirDetalhes() + ", Bebida de refrigerante.";
       }
 
       @Override
@@ -37,7 +37,7 @@ public class BebidaDecoratorTest {
   void testExibirDetalhes() {
     String detalhes = decorator.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com acréscimo de refrigerante.",
+        "Pedido Pequeno com proteina: BOI, Bebida de refrigerante.",
         detalhes,
         "Testando se o acréscimo de refrigerante foi aplicado corretamente");
   }

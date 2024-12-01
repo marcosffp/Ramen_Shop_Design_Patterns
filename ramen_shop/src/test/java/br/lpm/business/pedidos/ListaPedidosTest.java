@@ -34,7 +34,16 @@ public class ListaPedidosTest {
     Pedido pedido3 = new PedidoPequeno("Alvim", Tamanho.PEQUENO, Proteina.BOI);
     listaPedidos.addPedido(pedido3);
     assertEquals(3, listaPedidos.getQuantidadePedidos(),
-        "Testando se adicionou um pedido na lista de pedidos.");
+        "Testando se adicionou um pedido na lista de pedidos");
+  }
+
+  @Test
+  void testAddPedidoDuplicado() {
+    RamenShopException exception = assertThrows(RamenShopException.class, () -> {
+      listaPedidos.addPedido(pedido1); 
+    });
+    assertEquals("Já existe um pedido com o número " + pedido1.getNumeroPedido() + ".", exception.getMessage(),
+        "Testando se não adicionou um pedido duplicado na lista de pedidos");
   }
 
   @Test
@@ -42,8 +51,8 @@ public class ListaPedidosTest {
     RamenShopException exception = assertThrows(RamenShopException.class, () -> {
       listaPedidos.addPedido(null);
     });
-    assertNotEquals("Testando se o pedido não pode ser nulo.", exception.getMessage(),
-        "Deve lançar exceção quando o pedido for nulo");
+    assertEquals("O pedido não pode ser nulo.", exception.getMessage(),
+        "Testando se não adicionou um pedido nulo na lista de pedidos");
   }
 
   @Test
@@ -60,7 +69,7 @@ public class ListaPedidosTest {
       listaPedidos.retirarPedido(999); 
     });
     assertEquals("Número do pedido inválido.", exception.getMessage(),
-        "Deve lançar exceção quando o pedido não for encontrado.");
+        "Testando se não retirou um pedido com número não existente");
   }
 
   @Test
@@ -75,7 +84,7 @@ public class ListaPedidosTest {
       listaPedidos.getPedido(999); 
     });
     assertEquals("Pedido com número 999 não encontrado.", exception.getMessage(),
-        "Deve lançar exceção quando o pedido não for encontrado");
+        "Testando se não retornou um pedido com número não existente");
   }
 
   @Test
@@ -89,5 +98,11 @@ public class ListaPedidosTest {
     listaPedidos.removerTodosPedidos();
     assertEquals(0, listaPedidos.getQuantidadePedidos(),
         "Testando se a quantidade de pedidos é 0 após remover todos os pedidos");
+  }
+
+  @Test
+  void testSingletonInstance() {
+    ListaPedidos novaLista = ListaPedidos.getInstance();
+    assertSame(listaPedidos, novaLista, "Testando se ListaPedidos é um singleton");
   }
 }

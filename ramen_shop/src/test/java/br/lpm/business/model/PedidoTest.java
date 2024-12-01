@@ -50,6 +50,12 @@ class PedidoTest {
   }
 
   @Test
+  void testSequenciaDeNumeros() {
+    assertEquals(1, pedido1.getNumeroPedido(), "Testando se o número do pedido 1 está correto");
+    assertEquals(2, pedido2.getNumeroPedido(), "Testando se o número do pedido 2 está correto");
+  }
+
+  @Test
   void testGetNumeroPedido() {
     assertNotEquals(pedido1.getNumeroPedido(), pedido2.getNumeroPedido(), 0.01, "Testando se os números dos pedidos são diferentes");
     assertEquals(pedido1.getNumeroPedido() + 1, pedido2.getNumeroPedido(), 0.01, "Testando se os números dos pedidos são sequenciais");

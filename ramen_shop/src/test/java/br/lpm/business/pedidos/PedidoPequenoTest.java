@@ -2,6 +2,7 @@ package br.lpm.business.pedidos;
 
 import br.lpm.business.model.Pedido;
 import br.lpm.business.model.enums.Proteina;
+import br.lpm.business.model.enums.Status;
 import br.lpm.business.model.enums.Tamanho;
 import br.lpm.business.util.GeradorIdPedido;
 
@@ -40,4 +41,23 @@ public class PedidoPequenoTest {
   void testGetProteina() {
     assertEquals(Proteina.BOI, pedidoPequeno.getProteinaPedido(), "Testando se a proteína do pedido está correta");
   }
+
+  @Test
+  void testGetPrecoTotal() {
+    double precoEsperado = Tamanho.PEQUENO.getPreco() + Proteina.BOI.getPreco();
+    assertEquals(precoEsperado, pedidoPequeno.getPrecoTotal(),
+        "Testando se o preço total está correto");
+  }
+
+  @Test
+  void testSetStatusPedido() {
+    pedidoPequeno.setStatusPedido(Status.EM_PREPARO);
+    assertEquals(Status.EM_PREPARO, pedidoPequeno.getStatusPedido(),
+        "Testando se o status do pedido foi alterado corretamente");
+
+    pedidoPequeno.setStatusPedido(Status.RETIRADO);
+    assertEquals(Status.RETIRADO, pedidoPequeno.getStatusPedido(),
+        "Testando se o status do pedido foi alterado para RETIRADO");
+  }
+
 }

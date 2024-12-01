@@ -23,7 +23,7 @@ public class AcrescimoDecoratorTest {
     decorator = new AcrescimoDecorator(pedidoBase) {
       @Override
       public String exibirDetalhes() {
-        return pedidoBase.exibirDetalhes() + " com acréscimo de teriyaki.";
+        return pedidoBase.exibirDetalhes() + ", Acréscimo de teriyaki";
       }
 
       @Override
@@ -37,7 +37,7 @@ public class AcrescimoDecoratorTest {
   void testExibirDetalhes() {
     String detalhes = decorator.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com acréscimo de teriyaki.",
+        "Pedido Pequeno com proteina: BOI, Acréscimo de teriyaki",
         detalhes,
         "Testando se o acréscimo de teriyaki foi aplicado corretamente");
   }

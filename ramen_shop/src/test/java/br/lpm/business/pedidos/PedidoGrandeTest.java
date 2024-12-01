@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import br.lpm.business.model.Pedido;
 import br.lpm.business.model.enums.Proteina;
+import br.lpm.business.model.enums.Status;
 import br.lpm.business.model.enums.Tamanho;
 import br.lpm.business.util.GeradorIdPedido;
 
@@ -16,7 +17,7 @@ Pedido pedidoGrande;
   @BeforeEach
   void setUp() {
     GeradorIdPedido.reset();
-    pedidoGrande = new PedidoGrande("Marcos", Tamanho.PEQUENO, Proteina.BOI);
+    pedidoGrande = new PedidoGrande("Marcos", Tamanho.GRANDE, Proteina.BOI);
   }
 
   @Test
@@ -33,12 +34,30 @@ Pedido pedidoGrande;
 
   @Test 
   void testGetTamanho() {
-    assertEquals(Tamanho.PEQUENO, pedidoGrande.getTamanhoPedido(), "Testando se o tamanho do pedido está correto");
+    assertEquals(Tamanho.GRANDE, pedidoGrande.getTamanhoPedido(), "Testando se o tamanho do pedido está correto");
   }
 
   @Test
   void testGetProteina() {
     assertEquals(Proteina.BOI, pedidoGrande.getProteinaPedido(), "Testando se a proteína do pedido está correta");
+  }
+
+    @Test
+  void testGetPrecoTotal() {
+    double precoEsperado = Tamanho.GRANDE.getPreco() + Proteina.BOI.getPreco();
+    assertEquals(precoEsperado, pedidoGrande.getPrecoTotal(),
+        "Testando se o preço total está correto");
+  }
+
+  @Test
+  void testSetStatusPedido() {
+    pedidoGrande.setStatusPedido(Status.EM_PREPARO);
+    assertEquals(Status.EM_PREPARO, pedidoGrande.getStatusPedido(),
+        "Testando se o status do pedido foi alterado corretamente");
+
+    pedidoGrande.setStatusPedido(Status.RETIRADO);
+    assertEquals(Status.RETIRADO, pedidoGrande.getStatusPedido(),
+        "Testando se o status do pedido foi alterado para RETIRADO");
   }
 }
 

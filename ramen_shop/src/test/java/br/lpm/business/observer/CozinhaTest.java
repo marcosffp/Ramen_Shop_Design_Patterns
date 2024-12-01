@@ -26,22 +26,27 @@ public class CozinhaTest {
 
   @Test
   void testRegistrarObservador() throws RamenShopException {
-    cozinha.registrarObservador(clienteObserver);
     assertEquals(1, cozinha.getObservadores().size(), "Testando se o observador foi registrado corretamente");
+    ClienteObserver clienteObserver2 = new ClienteObserver(cozinha, "Alvim");
+    cozinha.registrarObservador(clienteObserver2);
+    assertEquals(2, cozinha.getObservadores().size(), "Testando se o observador foi registrado corretamente");
+  }
+
+
+  @Test
+  void testSetPedidoProntoStatusInvalido() {
+    pedido.setStatusPedido(Status.PENDENTE);
+    RamenShopException exception = assertThrows(RamenShopException.class, () -> cozinha.setPedidoPronto(pedido));
+    assertEquals("O pedido deve estar com status EM_PREPARO para ser concluído. Status atual: PENDENTE",
+        exception.getMessage(), "Testando se o status do pedido é inválido");
   }
 
   @Test
-  void testSetPedidoPronto() throws RamenShopException {
-    assertThrows(RamenShopException.class, () -> {
-      cozinha.setPedidoPronto(null);
-    }, "Testando se o status do pedido foi alterado para PRONTO");
-    pedido.setStatusPedido(Status.PENDENTE);
-    assertThrows(RamenShopException.class, () -> {
-      cozinha.setPedidoPronto(pedido);
-    }, "Testando se o status do pedido foi alterado para PRONTO");
+  void testSetPedidoProntoCorretamente() throws RamenShopException {
     pedido.setStatusPedido(Status.EM_PREPARO);
     cozinha.setPedidoPronto(pedido);
-    assertEquals(Status.PRONTO, pedido.getStatusPedido(), "Testando se o status do pedido foi alterado para PRONTO");
+    assertEquals(Status.PRONTO, pedido.getStatusPedido(),
+        "Testando se o status do pedido foi alterado corretamente");
   }
 
   @Test
@@ -51,7 +56,15 @@ public class CozinhaTest {
     cozinha.setPedidoPronto(pedido);
 
     String mensagemNotificacao = clienteObserver.notificar();
-    assertTrue(mensagemNotificacao.contains("Seu pedido com o número"), "O cliente não foi notificado corretamente.");
+    assertTrue(mensagemNotificacao.contains("Seu pedido com o número"), "Testando se a notificação foi enviada corretamente");
+  }
+
+  @Test
+  void testNotificarObservadoresSemRegistro() {
+    Cozinha novaCozinha = new Cozinha();
+    RamenShopException exception = assertThrows(RamenShopException.class, novaCozinha::notificarObservadores);
+    assertEquals("Não há observadores registrados para notificar.", exception.getMessage(),
+        "Testando se a exceção foi lançada corretamente");
   }
 
   @Test
@@ -62,4 +75,6 @@ public class CozinhaTest {
     assertEquals(Status.RETIRADO, pedidoRetirado.getStatusPedido(),
         "Testando se o status do pedido foi alterado para RETIRADO");
   }
+
+
 }
