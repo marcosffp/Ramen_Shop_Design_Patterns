@@ -41,7 +41,7 @@ public class Main {
                 System.out.print("Escolha uma opção: ");
 
                 int opcao = scanner.nextInt();
-                scanner.nextLine(); // Consome o \n do buffer após a leitura de números
+                scanner.nextLine(); 
 
                 switch (opcao) {
                     case 1 -> fazerPedido(scanner);
@@ -55,7 +55,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\nEntrada inválida. Por favor, digite um número válido.");
-                scanner.nextLine(); // Limpa o buffer de entrada (após InputMismatchException)
+                scanner.nextLine(); 
             } catch (Exception e) {
                 System.out.println("\nErro inesperado: " + e.getMessage());
             }
@@ -73,7 +73,7 @@ public class Main {
             System.out.println("2. Médio (R$ 12,90)");
             System.out.println("3. Grande (R$ 15,90)");
             int opcaoTamanho = scanner.nextInt();
-            scanner.nextLine(); // Consome o \n do buffer
+            scanner.nextLine(); 
 
             String tamanhoEscolhido = "";
             switch (opcaoTamanho) {
@@ -88,7 +88,7 @@ public class Main {
             System.out.println("2. Boi (+ R$ 7,90)");
             System.out.println("3. Porco (+ R$ 5,90)");
             int opcaoProteina = scanner.nextInt();
-            scanner.nextLine(); // Consome o \n do buffer
+            scanner.nextLine(); 
 
             String proteinaEscolhida = "";
             switch (opcaoProteina) {
@@ -99,7 +99,7 @@ public class Main {
             }
 
             List<Integer> opcoesSelecionadas = new ArrayList<>();
-            // Loop para acréscimos
+    
             System.out.println("\nEscolha os acréscimos (Digite 7 para finalizar):");
             boolean continuarAcrescimos = true;
             while (continuarAcrescimos) {
@@ -112,7 +112,7 @@ public class Main {
                 System.out.println("7. Finalizar Acréscimos");
                 try {
                     int opcao = scanner.nextInt();
-                    scanner.nextLine(); // Consome o \n do buffer
+                    scanner.nextLine(); 
                     if (opcao == 7) {
                         continuarAcrescimos = false;
                     } else if (opcao >= 1 && opcao <= 6) {
@@ -122,11 +122,11 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada inválida. Tente novamente.");
-                    scanner.nextLine(); // Limpa o buffer
+                    scanner.nextLine(); 
                 }
             }
 
-            // Loop para bebidas
+
             System.out.println("\nEscolha as bebidas (Digite 4 para finalizar):");
             boolean continuarBebidas = true;
             while (continuarBebidas) {
@@ -136,17 +136,17 @@ public class Main {
                 System.out.println("4. Finalizar Bebidas");
                 try {
                     int opcao = scanner.nextInt();
-                    scanner.nextLine(); // Consome o \n do buffer
+                    scanner.nextLine(); 
                     if (opcao == 4) {
                         continuarBebidas = false;
                     } else if (opcao >= 1 && opcao <= 3) {
-                        opcoesSelecionadas.add(opcao + 6); // Adiciona as opções de bebidas
+                        opcoesSelecionadas.add(opcao + 6);
                     } else {
                         System.out.println("Opção inválida. Tente novamente.");
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada inválida. Tente novamente.");
-                    scanner.nextLine(); // Limpa o buffer
+                    scanner.nextLine(); 
                 }
             }
 
@@ -158,45 +158,35 @@ public class Main {
             System.out.println(ramenController.obterInformacoesPedido(pedido));
             System.out.println("---------------------------------------");
 
-        } catch (InputMismatchException e) {
-            System.out.println("\nEntrada inválida. Por favor, insira números válidos.");
-            scanner.nextLine(); // Limpa o buffer
         } catch (RamenShopException e) {
             System.out.println("\nErro ao processar a operação: " + e.getMessage());
+        }catch(Exception e){
+            System.out.println("\nErro inesperado: " + e.getMessage());
         }
     }
 
-    private void retirarPedido(Scanner scanner) {
+    public void retirarPedido(Scanner scanner) {
         try {
             System.out.print("Digite o número do pedido para retirar: ");
             String numeroPedidoStr = scanner.nextLine();
 
-            if (numeroPedidoStr == null || numeroPedidoStr.isEmpty()) {
-                System.out.println("Não há nenhum pedido selecionado.");
-            } else {
-                String mensagem = ramenController.retirarPedidoCozinha(numeroPedidoStr);
-                System.out.println(mensagem);
-            }
+            String mensagem = ramenController.retirarPedidoCozinha(numeroPedidoStr);
+            System.out.println(mensagem);
         } catch (IllegalArgumentException e) {
-            System.out.println("Erro: Número do pedido inválido.");
+            System.out.println("\nErro: Entrada inválida. O número do pedido deve ser numérico.");
         } catch (RamenShopException e) {
-            System.out.println("Erro ao processar a operação: " + e.getMessage());
+            System.out.println("\nErro ao retirar o pedido: " + e.getMessage());
         }
     }
 
-    private void exibirBalanco() {
+    public void exibirBalanco() {
         try {
-            String balanco = ramenController.obterBalanco();
-
-            if (balanco == null || balanco.isEmpty()) {
-                System.out.println("Nenhum balanço disponível.");
-            } else {
-                System.out.println("\n--- Balanço Financeiro ---");
-                System.out.println(balanco);
-                System.out.println("---------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Erro ao exibir o balanço: " + e.getMessage());
+            String balancoStr = ramenController.obterBalanco();
+            System.out.println("\n--- Balanço Financeiro ---");
+            System.out.println(balancoStr);
+        } catch (RamenShopException e) {
+            System.out.println("\nErro ao exibir o balanço: " + e.getMessage());
         }
     }
+
 }

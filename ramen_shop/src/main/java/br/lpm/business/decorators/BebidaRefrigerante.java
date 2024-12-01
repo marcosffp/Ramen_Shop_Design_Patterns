@@ -10,7 +10,7 @@ public class BebidaRefrigerante extends BebidaDecorator {
 
   @Override
   public String exibirDetalhes() {
-   return super.exibirDetalhes() + " com a bebida Refrigerante.";
+   return super.exibirDetalhes() + ", Bebida Refrigerante";
   }
 
   @Override

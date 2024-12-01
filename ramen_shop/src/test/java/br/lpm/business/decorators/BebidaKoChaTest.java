@@ -28,7 +28,7 @@ public class BebidaKoChaTest {
   void testExibirDetalhes() {
     String detalhes = bebidaKoCha.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com a bebida Ko-Cha.",
+        "Pedido Pequeno com proteina: BOI, Bebida Ko-Cha",
         detalhes,
         "Testando se a bebida Ko-Cha foi aplicada corretamente");
   }

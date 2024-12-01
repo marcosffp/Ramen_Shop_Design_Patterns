@@ -59,7 +59,7 @@ public class ListaPedidosTest {
     RamenShopException exception = assertThrows(RamenShopException.class, () -> {
       listaPedidos.retirarPedido(999); 
     });
-    assertEquals("Pedido com número 999 não encontrado.", exception.getMessage(),
+    assertEquals("Número do pedido inválido.", exception.getMessage(),
         "Deve lançar exceção quando o pedido não for encontrado.");
   }
 

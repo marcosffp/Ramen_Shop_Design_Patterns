@@ -26,7 +26,7 @@ public class AcrescimoCremeAlhoTest {
   void testExibirDetalhes() {
     String detalhes = decorator.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com acréscimo de Creme de Alho.",
+        "Pedido Pequeno com proteina: BOI, Acréscimo de Creme de Alho",
         detalhes,
         "Testando se o acréscimo de Creme de Alho foi aplicado corretamente");
   }

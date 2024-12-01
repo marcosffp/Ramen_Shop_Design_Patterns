@@ -10,7 +10,7 @@ public class BebidaKoCha extends BebidaDecorator {
 
   @Override
   public String exibirDetalhes() {
-    return super.exibirDetalhes() + " com a bebida Ko-Cha.";
+    return super.exibirDetalhes() + ", Bebida Ko-Cha";
   }
 
 

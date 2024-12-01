@@ -11,7 +11,7 @@ public class AcrescimoChilli extends AcrescimoDecorator {
 
     @Override
     public String exibirDetalhes() {
-        return super.exibirDetalhes() + " com acréscimo de Chilli.";
+        return super.exibirDetalhes() + ", Acréscimo de Chilli";
     }
 
     @Override

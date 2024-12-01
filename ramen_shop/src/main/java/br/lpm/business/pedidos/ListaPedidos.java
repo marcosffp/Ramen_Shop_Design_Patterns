@@ -28,22 +28,17 @@ public class ListaPedidos {
     if (pedidos.stream().anyMatch(p -> p.getNumeroPedido() == pedido.getNumeroPedido())) {
       throw new RamenShopException("Já existe um pedido com o número " + pedido.getNumeroPedido() + ".");
     }
-
     pedidos.add(pedido);
   }
 
   public Pedido retirarPedido(int numeroPedido) throws RamenShopException {
-    if (pedidos.isEmpty()) {
-      throw new RamenShopException("A lista de pedidos está vazia.");
-    }
-
     Pedido pedido = pedidos.stream()
         .filter(p -> p.getNumeroPedido() == numeroPedido)
         .findFirst()
         .orElse(null);
 
     if (pedido == null) {
-      throw new RamenShopException("Pedido com número " + numeroPedido + " não encontrado.");
+      throw new RamenShopException("Número do pedido inválido.");
     }
 
     pedidos.removeIf(p -> p.getNumeroPedido() == numeroPedido);

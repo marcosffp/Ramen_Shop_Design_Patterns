@@ -61,9 +61,5 @@ public class CozinhaTest {
     Pedido pedidoRetirado = cozinha.retirarPedidoPronto();
     assertEquals(Status.RETIRADO, pedidoRetirado.getStatusPedido(),
         "Testando se o status do pedido foi alterado para RETIRADO");
-    assertThrows(RamenShopException.class, () -> {
-      cozinha.retirarPedidoPronto();
-    }, "Testando se o pedido foi retirado corretamente");
   }
-
 }

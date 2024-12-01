@@ -7,14 +7,12 @@ import br.lpm.business.util.GeradorIdPedido;
 
 public abstract class Pedido {
 
-  private final int numeroPedido;
+  private int numeroPedido;
   private String nomeCliente;
-  private static int contadorPedidos = 1; // Contador de pedidos
   private Tamanho tamanhoPedido;
   private Status statusPedido;
   private Proteina proteinaPedido;
 
-  // Construtor
   public Pedido(String nomeCliente, Tamanho tamanhoPedido, Proteina proteinaPedido) {
     this.numeroPedido = GeradorIdPedido.gerarId();
     this.nomeCliente = nomeCliente;
@@ -23,13 +21,7 @@ public abstract class Pedido {
     this.proteinaPedido = proteinaPedido;
   }
 
-  // Método sincronizado para garantir que o contador seja atualizado de forma
-  // segura
-  private synchronized int gerarNumeroPedido() {
-    return contadorPedidos++; // Incrementa o contador de forma segura
-  }
 
-  // Métodos de acesso
   public void setStatusPedido(Status statusPedido) {
     this.statusPedido = statusPedido;
   }

@@ -27,7 +27,7 @@ public class AcrescimoChilliTest {
   void testExibirDetalhes() {
     String detalhes = decorator.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com acréscimo de Chilli.",
+        "Pedido Pequeno com proteina: BOI, Acréscimo de Chilli",
         detalhes,
         "Testando se o acréscimo de Chilli foi aplicado corretamente");
   }

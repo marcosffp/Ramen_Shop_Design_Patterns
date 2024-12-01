@@ -26,7 +26,7 @@ public class AcrescimoShitakeTest {
   void testExibirDetalhes() {
     String detalhes = decorator.exibirDetalhes();
     assertEquals(
-        "Pedido Pequeno com proteina: BOI com acréscimo de shitake.",
+        "Pedido Pequeno com proteina: BOI, Acréscimo de shitake",
         detalhes,
         "Testando se o acréscimo de shitake foi aplicado corretamente");
   }

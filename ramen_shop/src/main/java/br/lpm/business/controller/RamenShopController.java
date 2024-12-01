@@ -18,8 +18,8 @@ public class RamenShopController {
   private final Balanco balanco;
   private final Subject cozinha;
   private final PedidoFactory ramenFactory;
-  private static Observer cliente;
-  private static Pedido pedido;
+  private  Observer cliente;
+  private  Pedido pedido;
 
   public RamenShopController(ListaPedidos listaPedidos, Balanco balanco, PedidoFactory ramenFactory, Subject cozinha) {
     this.listaPedidos = listaPedidos;
@@ -28,90 +28,60 @@ public class RamenShopController {
     this.cozinha = cozinha;
   }
 
-  // Método para fazer o pedido
   public Pedido fazerPedido(String nomeCliente, String tamanho, String proteina, List<Integer> opcoesSelecionadas)
       throws RamenShopException {
-
     validarNomeCliente(nomeCliente);
-
     pedido = ramenFactory.criarPedido(tamanho, proteina, nomeCliente);
-
     adicionarAcrecimosEBeberagens(opcoesSelecionadas);
-
     listaPedidos.addPedido(pedido);
-
     registrarCliente(nomeCliente);
-
     return pedido;
   }
 
-  // Valida o nome do cliente
   private void validarNomeCliente(String nomeCliente) throws RamenShopException {
     if (nomeCliente == null || nomeCliente.trim().isEmpty()) {
       throw new RamenShopException("Nome do cliente é obrigatório.");
     }
   }
 
-  private void adicionarAcrecimosEBeberagens(List<Integer> opcoesSelecionadas) {
+  private void adicionarAcrecimosEBeberagens(List<Integer> opcoesSelecionadas)throws RamenShopException {
     for (int opcao : opcoesSelecionadas) {
-      if (opcao >= 1 && opcao <= 3) { // Bebidas
+      if (opcao >= 1 && opcao <= 3) { 
         adicionarBebida(opcao);
-      } else if (opcao >= 4 && opcao <= 9) { // Acréscimos
+      } else if (opcao >= 4 && opcao <= 9) { 
         adicionarAcrescimo(opcao);
       } else {
-        throw new IllegalArgumentException("Opção inválida.");
+        throw new RamenShopException("Opção inválida.");
       }
     }
   }
 
-  private void adicionarBebida(int opcao) {
+  private void adicionarBebida(int opcao) throws RamenShopException {
     switch (opcao) {
-      case 1:
-        pedido = new BebidaRefrigerante(pedido);
-        break;
-      case 2:
-        pedido = new BebidaOCha(pedido);
-        break;
-      case 3:
-        pedido = new BebidaKoCha(pedido);
-        break;
-      default:
-        throw new IllegalArgumentException("Opção de bebida inválida.");
+      case 1 -> pedido = new BebidaRefrigerante(pedido);
+      case 2 -> pedido = new BebidaOCha(pedido);
+      case 3 -> pedido = new BebidaKoCha(pedido);
+      default -> throw new RamenShopException("Opção de bebida inválida.");
     }
   }
 
-  private void adicionarAcrescimo(int opcao) {
+  private void adicionarAcrescimo(int opcao) throws RamenShopException {
     switch (opcao) {
-      case 4:
-        pedido = new AcrescimoProteinaExtra(pedido);
-        break;
-      case 5:
-        pedido = new AcrescimoChilli(pedido);
-        break;
-      case 6:
-        pedido = new AcrescimoCremeAlho(pedido);
-        break;
-      case 7:
-        pedido = new AcrescimoCroutons(pedido);
-        break;
-      case 8:
-        pedido = new AcrescimoShitake(pedido);
-        break;
-      case 9:
-        pedido = new AcrescimoTofu(pedido);
-        break;
-      default:
-        throw new IllegalArgumentException("Opção de acréscimo inválida.");
+      case 4 -> pedido = new AcrescimoProteinaExtra(pedido);
+      case 5 -> pedido = new AcrescimoChilli(pedido);
+      case 6 -> pedido = new AcrescimoCremeAlho(pedido);
+      case 7 -> pedido = new AcrescimoCroutons(pedido);
+      case 8 -> pedido = new AcrescimoShitake(pedido);
+      case 9 -> pedido = new AcrescimoTofu(pedido);
+      default -> throw new RamenShopException("Opção de acréscimo inválida.");
     }
   }
 
-  // Registra o cliente como observador e notifica a cozinha
   private void registrarCliente(String nomeCliente) throws RamenShopException {
     cliente = new ClienteObserver(cozinha, nomeCliente);
     cozinha.registrarObservador(cliente);
   }
 
-  // Retorna as informações do pedido como uma String formatada
   public String obterInformacoesPedido(Pedido pedidoPronto) {
     if (pedidoPronto == null) {
       throw new IllegalArgumentException("Erro: Nenhum pedido fornecido.");
@@ -123,24 +93,16 @@ public class RamenShopController {
         "\nDetalhes do Pedido: " + pedidoPronto.exibirDetalhes();
   }
 
-  // Realiza a lógica para retirar o pedido da cozinha e retorna as mensagens
-  // geradas
   public String retirarPedidoCozinha(String numeroPedidoStr) throws RamenShopException {
-    try {
-      int numeroPedido = Integer.parseInt(numeroPedidoStr);
-      Pedido pedido = listaPedidos.retirarPedido(numeroPedido);
-      cozinha.setPedidoPronto(pedido);
-      String notificacao = cliente.notificar();
-      pedido = cozinha.retirarPedidoPronto();
-      balanco.addPedidoConcluidos(pedido);
-
-      return notificacao;
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Número do pedido inválido.");
-    }
+    int numeroPedido = Integer.parseInt(numeroPedidoStr);
+    Pedido pedido = listaPedidos.retirarPedido(numeroPedido);
+    cozinha.setPedidoPronto(pedido);
+    String notificacao = cliente.notificar();
+    pedido = cozinha.retirarPedidoPronto();
+    balanco.addPedidoConcluidos(pedido);
+    return notificacao;
   }
 
-  // Retorna o balanço financeiro como uma String
   public String obterBalanco() throws RamenShopException {
     return balanco.exibirBalanco();
   }
