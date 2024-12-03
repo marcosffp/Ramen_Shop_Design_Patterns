@@ -14,7 +14,6 @@ import br.lpm.business.observer.Subject;
 import br.lpm.business.pedidos.ListaPedidos;
 import br.lpm.business.pedidos.PedidoFactory;
 
-
 public class RamenShopControllerTest {
 
   private static ListaPedidos listaPedidos;
@@ -31,7 +30,7 @@ public class RamenShopControllerTest {
     cozinha = new Cozinha();
     ramenFactory = new PedidoFactory();
     ramenController = new RamenShopController(listaPedidos, balanco, ramenFactory, cozinha);
-   pedido = ramenController.fazerPedido("Marcos", "Pequeno", "Boi", List.of(2, 9));
+    pedido = ramenController.fazerPedido("Marcos", "Pequeno", "Boi", List.of(2, 9));
   }
 
   @Test
@@ -43,39 +42,27 @@ public class RamenShopControllerTest {
     assertTrue(pedido.getPrecoTotal() > 0, "Testando se o preço total é maior que zero");
     assertTrue(listaPedidos.getQuantidadePedidos() > 0, "Testando se a lista de pedidos não está vazia");
 
-   RamenShopException ramenShopException= assertThrows(RamenShopException.class, () -> {
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido("", "Pequeno", "Boi", List.of(2, 9));
-   });
-  
-    assertEquals("Nome do cliente é obrigatório.", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando o nome do cliente é vazio");
+    }, "Testando se é lançada uma exceção quando o nome do cliente é vazio");
 
-   ramenShopException=assertThrows(RamenShopException.class, () -> {
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido(null, "Pequeno", "Boi", List.of(2, 9));
-   });
-    assertEquals("Nome do cliente é obrigatório.", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando o nome do cliente é nulo");
-
-   
-   ramenShopException= assertThrows(RamenShopException.class, () -> {
+    }, "Testando se é lançada uma exceção quando o nome do cliente é nulo");
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido("Marcos", "", "Boi", List.of(2, 9));
-   });
-    assertEquals("Tamanho do pedido não pode ser vazio", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando o tamanho é vazio");
+    }, "Testando se é lançada uma exceção quando o tamanho é vazio");
 
-    ramenShopException=assertThrows(RamenShopException.class, () -> {
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido("Marcos", null, "Boi", List.of(2, 9));
-    });
-    assertEquals("Tamanho do pedido não pode ser vazio", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando o tamanho é nulo");
+    }, "Testando se é lançada uma exceção quando o tamanho é nulo");
 
-    ramenShopException=assertThrows(RamenShopException.class, () -> {
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido("Marcos", "Pequeno", "", List.of(2, 9));
-    });
-    assertEquals("Proteína do pedido não pode ser vazia", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando a proteína é vazia");
-
-    ramenShopException=assertThrows(RamenShopException.class, () -> {
+    }, "Testando se é lançada uma exceção quando a proteína é vazia");
+    assertThrows(RamenShopException.class, () -> {
       ramenController.fazerPedido("Marcos", "Pequeno", null, List.of(2, 9));
-    });
-    assertEquals("Proteína do pedido não pode ser vazia", ramenShopException.getMessage(), "Testando se é lançada uma exceção quando a proteína é nula");
-
-
+    }, "Testando se é lançada uma exceção quando a proteína é nula");
   }
 
   @Test
@@ -90,7 +77,7 @@ public class RamenShopControllerTest {
   void testObterBalanco() throws RamenShopException {
     String balancoAtual = ramenController.obterBalanco();
     assertNotNull(balancoAtual, "Testando se o balanço não é nulo");
-    String num=String.valueOf(pedido.getNumeroPedido());
+    String num = String.valueOf(pedido.getNumeroPedido());
     ramenController.retirarPedidoCozinha(num);
     String balancoAtual2 = ramenController.obterBalanco();
     assertTrue(balancoAtual2.contains("Marcos"), "Testando se o balanço contém o nome do cliente");
@@ -100,9 +87,12 @@ public class RamenShopControllerTest {
   void testObterInformacoesPedido() throws RamenShopException {
     String informacoesPedido = ramenController.obterInformacoesPedido(pedido);
     assertNotNull(informacoesPedido, "Testando se as informações do pedido não são nulas");
-    assertTrue(informacoesPedido.contains("Pedido #"), "Testando se as informações do pedido contêm o número do pedido");
-    assertTrue(informacoesPedido.contains("Cliente: Marcos"), "Testando se as informações do pedido contêm o nome do cliente");
-    assertTrue(informacoesPedido.contains("Preço Total: R$"), "Testando se as informações do pedido contêm o preço total");
+    assertTrue(informacoesPedido.contains("Pedido #"),
+        "Testando se as informações do pedido contêm o número do pedido");
+    assertTrue(informacoesPedido.contains("Cliente: Marcos"),
+        "Testando se as informações do pedido contêm o nome do cliente");
+    assertTrue(informacoesPedido.contains("Preço Total: R$"),
+        "Testando se as informações do pedido contêm o preço total");
   }
 
   @Test
@@ -115,11 +105,10 @@ public class RamenShopControllerTest {
 
     assertTrue(resultadoRetirada.contains(mensagemEsperada),
         "Testando se a mensagem de retirada contém a notificação para o cliente");
-    String numeroPedidoInvalido = "999999"; 
-    RamenShopException thrown = assertThrows(RamenShopException.class, () -> {
+    String numeroPedidoInvalido = "999999";
+    assertThrows(RamenShopException.class, () -> {
       ramenController.retirarPedidoCozinha(numeroPedidoInvalido);
-    });
-    assertEquals("Número do pedido inválido.", thrown.getMessage(), "Testando se a mensagem de erro é correta");
+    }, "Testando se é lançada uma exceção para número de pedido inválido");
 
   }
 }

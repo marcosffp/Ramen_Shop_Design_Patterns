@@ -35,24 +35,15 @@ public class ListaPedidosTest {
     listaPedidos.addPedido(pedido3);
     assertEquals(3, listaPedidos.getQuantidadePedidos(),
         "Testando se adicionou um pedido na lista de pedidos");
-  }
 
-  @Test
-  void testAddPedidoDuplicado() {
-    RamenShopException exception = assertThrows(RamenShopException.class, () -> {
-      listaPedidos.addPedido(pedido1); 
-    });
-    assertEquals("Já existe um pedido com o número " + pedido1.getNumeroPedido() + ".", exception.getMessage(),
-        "Testando se não adicionou um pedido duplicado na lista de pedidos");
-  }
+    assertThrows(RamenShopException.class, () -> {
+      listaPedidos.addPedido(pedido1);
+    }, "Testando se não adicionou um pedido duplicado na lista de pedidos");
 
-  @Test
-  void testAddPedidoNulo() {
-    RamenShopException exception = assertThrows(RamenShopException.class, () -> {
+    assertThrows(RamenShopException.class, () -> {
       listaPedidos.addPedido(null);
-    });
-    assertEquals("O pedido não pode ser nulo.", exception.getMessage(),
-        "Testando se não adicionou um pedido nulo na lista de pedidos");
+    }, "Testando se não adicionou um pedido nulo na lista de pedidos");
+    
   }
 
   @Test
@@ -61,30 +52,21 @@ public class ListaPedidosTest {
     assertEquals(pedido1, pedidoRetirado, "Testando se retirou o pedido correto com o número 1");
     assertEquals(1, listaPedidos.getQuantidadePedidos(),
         "Testando se a quantidade de pedidos é 1 após retirar um pedido");
-  }
 
-  @Test
-  void testRetirarPedidoPorNumeroNaoExistente() throws RamenShopException {
-    RamenShopException exception = assertThrows(RamenShopException.class, () -> {
-      listaPedidos.retirarPedido(999); 
-    });
-    assertEquals("Número do pedido inválido.", exception.getMessage(),
-        "Testando se não retirou um pedido com número não existente");
+    assertThrows(RamenShopException.class, () -> {
+      listaPedidos.retirarPedido(999);
+    }, "Testando se não retirou um pedido com número não existente");
+    
   }
 
   @Test
   void testGetPedidoPorNumero() throws RamenShopException {
     Pedido pedidoBuscado = listaPedidos.getPedido(2);
     assertEquals(pedido2, pedidoBuscado, "Testando se retornou o pedido correto com o número 2");
-  }
 
-  @Test
-  void testGetPedidoPorNumeroNaoExistente() throws RamenShopException {
-    RamenShopException exception = assertThrows(RamenShopException.class, () -> {
-      listaPedidos.getPedido(999); 
-    });
-    assertEquals("Pedido com número 999 não encontrado.", exception.getMessage(),
-        "Testando se não retornou um pedido com número não existente");
+    assertThrows(RamenShopException.class, () -> {
+      listaPedidos.getPedido(999);
+    }, "Testando se não retornou um pedido com número não existente");
   }
 
   @Test

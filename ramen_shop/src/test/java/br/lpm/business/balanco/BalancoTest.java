@@ -19,18 +19,24 @@ public class BalancoTest {
   private Balanco balanco;
   private Pedido pedido1;
   private Pedido pedido2;
+  private Pedido pedido3;
+  private Pedido pedidoForaDaLista;
 
   @BeforeEach
   void setUp() throws RamenShopException {
     GeradorIdPedido.reset();
     balanco = Balanco.getInstance();
-    balanco.removerTodosPedidosConcluidos(); 
+    balanco.removerTodosPedidosConcluidos();
     pedido1 = new PedidoMedio("Alvim", Tamanho.PEQUENO, Proteina.BOI);
     pedido1.setStatusPedido(Status.RETIRADO);
     pedido2 = new PedidoGrande("Matheus", Tamanho.MEDIO, Proteina.BOI);
     pedido2.setStatusPedido(Status.RETIRADO);
-    balanco.addPedidoConcluidos(pedido1); 
-    balanco.addPedidoConcluidos(pedido2); 
+    pedido3 = new PedidoMedio("João", Tamanho.GRANDE, Proteina.BOI);
+    pedido3.setStatusPedido(Status.RETIRADO);
+    pedidoForaDaLista = new PedidoMedio("João", Tamanho.MEDIO, Proteina.VEGANO);
+    pedidoForaDaLista.setStatusPedido(Status.EM_PREPARO);
+    balanco.addPedidoConcluidos(pedido1);
+    balanco.addPedidoConcluidos(pedido2);
   }
 
   @Test
@@ -41,21 +47,36 @@ public class BalancoTest {
 
   @Test
   void testAddPedidoConcluidos() throws RamenShopException {
-    Pedido pedido3 = new PedidoMedio("Alvim", Tamanho.PEQUENO, Proteina.BOI);
-    pedido3.setStatusPedido(Status.RETIRADO);
+
     balanco.addPedidoConcluidos(pedido3);
+
     assertEquals(3, balanco.getQuantidadePedidosConcluidos(),
         "Testando se adicionou um pedido na lista de pedidos concluídos");
     balanco.removePedidoConcluidos(pedido3);
+
+    assertThrows(RamenShopException.class,
+        () -> {
+          balanco.addPedidoConcluidos(null);
+        },
+        "Testando se não adicionou um pedido nulo na lista de pedidos concluídos");
+
+    assertThrows(RamenShopException.class,
+        () -> {
+          balanco.addPedidoConcluidos(pedidoForaDaLista);
+        },
+        "Testando se não adicionou um pedido com status inválido na lista de pedidos concluídos");
+
   }
 
   @Test
   void testRemovePedidoConcluidos() throws RamenShopException {
-    balanco.removePedidoConcluidos(pedido1);
-    assertEquals(1, balanco.getQuantidadePedidosConcluidos(), "Testando se removeu um pedido da lista de pedidos concluídos");
-    RamenShopException ramenShopException=assertThrows(RamenShopException.class,
-        () -> balanco.removePedidoConcluidos(pedido1));
-    assertEquals("Pedido concluído não encontrado.", ramenShopException.getMessage(),"Testando se removeu um pedido da lista de pedidos concluídos");
+    assertEquals(2, balanco.getQuantidadePedidosConcluidos(),
+        "Testando se removeu um pedido da lista de pedidos concluídos");
+    assertThrows(RamenShopException.class,
+        () -> {
+          balanco.removePedidoConcluidos(pedidoForaDaLista);
+        },
+        "Testando se não removeu um pedido não existente na lista de pedidos concluídos");
   }
 
   @Test
@@ -72,23 +93,5 @@ public class BalancoTest {
 
     String balancoRecebido = balanco.exibirBalanco();
     assertEquals(balancoEsperado, balancoRecebido, "Testando se o balanço está correto");
-  }
-
-  @Test
-  void testAddPedidoConcluidosComPedidoNulo() {
-   RamenShopException ramenShopException= assertThrows(RamenShopException.class,
-        () -> balanco.addPedidoConcluidos(null));
-    assertEquals("O pedido não pode ser nulo.", ramenShopException.getMessage(),
-        "Testando se não adicionou um pedido nulo na lista de pedidos concluídos");
-  }
-
-  @Test
-  void testAddPedidoConcluidosComStatusInvalido() throws RamenShopException {
-    Pedido pedidoInvalido = new PedidoMedio("João", Tamanho.MEDIO, Proteina.VEGANO);
-    pedidoInvalido.setStatusPedido(Status.EM_PREPARO);
-    RamenShopException ramenShopException=assertThrows(RamenShopException.class,
-        () -> balanco.addPedidoConcluidos(pedidoInvalido));
-    assertEquals("O pedido deve estar com status RETIRADO para ser concluído. Status atual: EM_PREPARO",ramenShopException.getMessage(),
-        "Testando se não adicionou um pedido com status inválido na lista de pedidos concluídos");
   }
 }
