@@ -13,22 +13,29 @@ import org.junit.jupiter.api.BeforeEach;
 class PedidoFactoryTest {
 
         private PedidoFactory pedidoFactory;
-        private Pedido pedido;
+        private Pedido pedidoGrande;
+        private Pedido pedidoMedio;
+        private Pedido pedidoPequeno;
 
         @BeforeEach
         void setUp() throws RamenShopException {
                 pedidoFactory = new PedidoFactory();
-                pedido = pedidoFactory.criarPedido("GRANDE", "BOI", "Marcos");
+                pedidoGrande = pedidoFactory.criarPedido("GRANDE", "BOI", "Marcos");
+                pedidoMedio = pedidoFactory.criarPedido("MEDIO", "BOI", "João");
+                pedidoPequeno = pedidoFactory.criarPedido("PEQUENO", "BOI", "Matheus");
+
         }
 
         @Test
         void testCriarPedidoComEntradasValidas() throws RamenShopException {
 
-                assertNotNull(pedido, "Testando se o pedido não é nulo para entradas válidas");
-                assertEquals(Tamanho.GRANDE, pedido.getTamanhoPedido(), "Testando se o tamanho é GRANDE");
-                assertEquals(Proteina.BOI, pedido.getProteinaPedido(), "Testando se a proteína é BOI");
-                assertEquals("Marcos", pedido.getNomeCliente(), "Testando se o nome do cliente é 'Marcos'");
-                assertTrue(pedido instanceof PedidoGrande, "Testando se o pedido criado é do tipo PedidoGrande");
+                assertNotNull(pedidoGrande, "Testando se o pedido não é nulo para entradas válidas");
+                assertEquals(Tamanho.GRANDE, pedidoGrande.getTamanhoPedido(), "Testando se o tamanho é GRANDE");
+                assertEquals(Proteina.BOI, pedidoGrande.getProteinaPedido(), "Testando se a proteína é BOI");
+                assertEquals("Marcos", pedidoGrande.getNomeCliente(), "Testando se o nome do cliente é 'Marcos'");
+                assertTrue(pedidoGrande instanceof PedidoGrande, "Testando se o pedido criado é do tipo PedidoGrande");
+                assertTrue(pedidoMedio instanceof PedidoMedio, "Testando se o pedido criado é do tipo PedidoMedio");
+                assertTrue(pedidoPequeno instanceof PedidoPequeno, "Testando se o pedido criado é do tipo PedidoPequeno");
 
                 assertThrows(
                                 RamenShopException.class,
@@ -49,16 +56,14 @@ class PedidoFactoryTest {
                                 }, "Testando se é lançada uma exceção quando o nome do cliente é vazio");
 
                 assertThrows(
-                                RamenShopException.class,
-                                () -> {
-                                        pedidoFactory.criarPedido("INVALIDO", "BOI", "Marcos");
-                                }, "Testando se é lançada uma exceção quando o tamanho é inválido");
+                                IllegalArgumentException.class,
+                                () -> pedidoFactory.criarPedido("INVALIDO", "BOI", "Marcos"),
+                                "Testando se é lançada uma exceção quando o tamanho é inválido");
 
                 assertThrows(
-                                RamenShopException.class,
-                                () -> {
-                                        pedidoFactory.criarPedido("GRANDE", "INVALIDO", "Marcos");
-                                }, "Testando se é lançada uma exceção quando a proteína é inválida");
+                                IllegalArgumentException.class,
+                                () -> pedidoFactory.criarPedido("GRANDE", "INVALIDO", "Marcos"),
+                                "Testando se é lançada uma exceção quando a proteína é inválida");
 
         }
 }
