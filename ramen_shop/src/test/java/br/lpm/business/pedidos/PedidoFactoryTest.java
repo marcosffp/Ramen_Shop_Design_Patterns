@@ -4,6 +4,8 @@ import br.lpm.business.exception.RamenShopException;
 import br.lpm.business.model.Pedido;
 import br.lpm.business.model.enums.Proteina;
 import br.lpm.business.model.enums.Tamanho;
+import br.lpm.business.util.GeradorIdPedido;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +21,7 @@ class PedidoFactoryTest {
 
         @BeforeEach
         void setUp() throws RamenShopException {
+                GeradorIdPedido.reset();
                 pedidoFactory = new PedidoFactory();
                 pedidoGrande = pedidoFactory.criarPedido("GRANDE", "BOI", "Marcos");
                 pedidoMedio = pedidoFactory.criarPedido("MEDIO", "BOI", "João");

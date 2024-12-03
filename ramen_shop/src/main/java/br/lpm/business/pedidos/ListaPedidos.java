@@ -19,7 +19,7 @@ public class ListaPedidos {
     return INSTANCE;
   }
 
-  public void addPedido(Pedido pedido) throws RamenShopException {
+  public synchronized void addPedido(Pedido pedido) throws RamenShopException {
     if (pedido == null) {
       throw new RamenShopException("O pedido não pode ser nulo.");
     }
@@ -31,32 +31,14 @@ public class ListaPedidos {
     pedidos.add(pedido);
   }
 
-  public Pedido retirarPedido(int numeroPedido) throws RamenShopException {
-    Pedido pedido = pedidos.stream()
-        .filter(p -> p.getNumeroPedido() == numeroPedido)
-        .findFirst()
-        .orElse(null);
-
-    if (pedido == null) {
-      throw new RamenShopException("Número do pedido inválido.");
-    }
-
-    pedidos.removeIf(p -> p.getNumeroPedido() == numeroPedido);
-    return pedido;
-  }
-
-  public Pedido getPedido(int numeroPedido) throws RamenShopException {
+  public synchronized Pedido proximoPedido() throws RamenShopException {
     if (pedidos.isEmpty()) {
       throw new RamenShopException("A lista de pedidos está vazia.");
     }
 
-    Pedido pedido = pedidos.stream()
-        .filter(p -> p.getNumeroPedido() == numeroPedido)
-        .findFirst()
-        .orElse(null);
-
+    Pedido pedido = pedidos.poll();
     if (pedido == null) {
-      throw new RamenShopException("Pedido com número " + numeroPedido + " não encontrado.");
+      throw new RamenShopException("Erro ao retirar o próximo pedido.");
     }
 
     return pedido;
@@ -66,7 +48,7 @@ public class ListaPedidos {
     return pedidos.size();
   }
 
-  public void removerTodosPedidos() {
+  public synchronized void removerTodosPedidos() {
     pedidos.clear();
   }
 }

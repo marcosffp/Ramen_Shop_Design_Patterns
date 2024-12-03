@@ -13,6 +13,7 @@ import br.lpm.business.observer.Cozinha;
 import br.lpm.business.observer.Subject;
 import br.lpm.business.pedidos.ListaPedidos;
 import br.lpm.business.pedidos.PedidoFactory;
+import br.lpm.business.util.GeradorIdPedido;
 
 public class RamenShopControllerTest {
 
@@ -25,6 +26,7 @@ public class RamenShopControllerTest {
 
   @BeforeEach
   void setUp() throws RamenShopException {
+    GeradorIdPedido.reset();
     listaPedidos = ListaPedidos.getInstance();
     balanco = Balanco.getInstance();
     cozinha = new Cozinha();
@@ -66,21 +68,13 @@ public class RamenShopControllerTest {
   }
 
   @Test
-  void testGetPedido() throws RamenShopException {
-    Pedido pedidoRecuperado = ramenController.getPedido(pedido.getNumeroPedido());
-    assertNotNull(pedidoRecuperado, "Testando se o pedido recuperado não é nulo");
-    assertEquals(pedido.getNumeroPedido(), pedidoRecuperado.getNumeroPedido(),
-        "Testando se o número do pedido é o mesmo");
-  }
-
-  @Test
   void testObterBalanco() throws RamenShopException {
     String balancoAtual = ramenController.obterBalanco();
     assertNotNull(balancoAtual, "Testando se o balanço não é nulo");
-    String num = String.valueOf(pedido.getNumeroPedido());
-    ramenController.retirarPedidoCozinha(num);
-    String balancoAtual2 = ramenController.obterBalanco();
-    assertTrue(balancoAtual2.contains("Marcos"), "Testando se o balanço contém o nome do cliente");
+    assertTrue(balancoAtual.contains("Receita Total: R$"),
+        "Testando se o balanço contém a receita total");
+    assertTrue(balancoAtual.contains("Ticket Médio: R$"), "Testando se o balanço contém o ticket médio");
+
   }
 
   @Test
@@ -96,19 +90,13 @@ public class RamenShopControllerTest {
   }
 
   @Test
-  void testRetirarPedido() throws RamenShopException {
-    String resultadoRetirada = ramenController.retirarPedidoCozinha(String.valueOf(pedido.getNumeroPedido()));
-    assertNotNull(resultadoRetirada, "Testando se o resultado da retirada não é nulo");
-
-    String mensagemEsperada = "Notificação para o cliente " + pedido.getNomeCliente() + ": Seu pedido com o número "
-        + cozinha.getPedidoPronto().getNumeroPedido() + " está pronto!";
-
-    assertTrue(resultadoRetirada.contains(mensagemEsperada),
-        "Testando se a mensagem de retirada contém a notificação para o cliente");
-    String numeroPedidoInvalido = "999999";
+  void testProcessarPedido() throws RamenShopException {
+    String notificacao = ramenController.processarPedido();
+    assertNotNull(notificacao, "Testando se a notificação não é nula");
+    assertTrue(notificacao.contains("Seu pedido com o número"), "Testando se a notificação contém 'Seu pedido'");
     assertThrows(RamenShopException.class, () -> {
-      ramenController.retirarPedidoCozinha(numeroPedidoInvalido);
-    }, "Testando se é lançada uma exceção para número de pedido inválido");
-
+      listaPedidos.proximoPedido();
+    },
+        "Testando se é lançada uma exceção quando não há pedidos na lista");
   }
 }

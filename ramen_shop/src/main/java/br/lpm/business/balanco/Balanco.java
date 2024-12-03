@@ -18,7 +18,7 @@ public class Balanco {
     return INSTANCE;
   }
 
-  public void addPedidoConcluidos(Pedido pedido) throws RamenShopException {
+  public synchronized void addPedidoConcluidos(Pedido pedido) throws RamenShopException {
     if (pedido == null) {
       throw new RamenShopException("O pedido não pode ser nulo.");
     }
@@ -31,28 +31,25 @@ public class Balanco {
     pedidosConcluidos.add(pedido);
   }
 
-  public void removePedidoConcluidos(Pedido pedido) throws RamenShopException {
-    if (pedido == null) {
-      throw new RamenShopException("O pedido não pode ser nulo.");
+  private double getReceitaTotal() {
+    return pedidosConcluidos.stream()
+        .mapToDouble(p -> p.getPrecoTotal())
+        .sum();
+  }
+
+  private double getTicketMedio() {
+    if (pedidosConcluidos.isEmpty()) {
+      return 0.0;
     }
 
-    if (!pedidosConcluidos.remove(pedido)) {
-      throw new RamenShopException("Pedido concluído não encontrado.");
-    }
-
-    pedidosConcluidos.remove(pedido);
+    double receita = getReceitaTotal();
+    return receita / pedidosConcluidos.size();
   }
 
   public String exibirBalanco() throws RamenShopException {
     if (pedidosConcluidos.isEmpty()) {
       throw new RamenShopException("Não há pedidos concluídos para exibir o balanço.");
     }
-
-    double receita = pedidosConcluidos.stream()
-        .mapToDouble(p -> p.getPrecoTotal())
-        .sum();
-
-    double ticketMedio = receita / pedidosConcluidos.size();
 
     StringBuilder relatorio = new StringBuilder();
     relatorio.append("=== Balanço Final do Restaurante ===\n");
@@ -74,13 +71,13 @@ public class Balanco {
     }
 
     relatorio.append("\nQuantidade de Pedidos: ").append(pedidosConcluidos.size());
-    relatorio.append("\nReceita Total: R$ ").append(String.format("%.2f", receita));
-    relatorio.append("\nTicket Médio: R$ ").append(String.format("%.2f", ticketMedio));
+    relatorio.append("\nReceita Total: R$ ").append(String.format("%.2f", this.getReceitaTotal()));
+    relatorio.append("\nTicket Médio: R$ ").append(String.format("%.2f", this.getTicketMedio()));
 
     return relatorio.toString();
   }
 
-  public void removerTodosPedidosConcluidos() {
+  public synchronized void removerTodosPedidosConcluidos() {
     pedidosConcluidos.clear();
   }
 

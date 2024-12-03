@@ -52,7 +52,6 @@ public class BalancoTest {
 
     assertEquals(3, balanco.getQuantidadePedidosConcluidos(),
         "Testando se adicionou um pedido na lista de pedidos concluídos");
-    balanco.removePedidoConcluidos(pedido3);
 
     assertThrows(RamenShopException.class,
         () -> {
@@ -68,16 +67,6 @@ public class BalancoTest {
 
   }
 
-  @Test
-  void testRemovePedidoConcluidos() throws RamenShopException {
-    assertEquals(2, balanco.getQuantidadePedidosConcluidos(),
-        "Testando se removeu um pedido da lista de pedidos concluídos");
-    assertThrows(RamenShopException.class,
-        () -> {
-          balanco.removePedidoConcluidos(pedidoForaDaLista);
-        },
-        "Testando se não removeu um pedido não existente na lista de pedidos concluídos");
-  }
 
   @Test
   void testExibirBalanco() throws RamenShopException {

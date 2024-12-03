@@ -23,6 +23,8 @@ public class Main {
             cozinha);
 
     public static void main(String[] args) {
+        ListaPedidos.getInstance().removerTodosPedidos();
+        Balanco.getInstance().removerTodosPedidosConcluidos();
         Main main = new Main();
         main.exibirMenuPrincipal();
     }
@@ -35,17 +37,17 @@ public class Main {
             try {
                 System.out.println("\n--- Ramen Shop ---");
                 System.out.println("1. Fazer Pedido");
-                System.out.println("2. Retirar Pedido da Cozinha");
+                System.out.println("2. Processar Pedido");
                 System.out.println("3. Ver Balanço");
                 System.out.println("4. Sair");
                 System.out.print("Escolha uma opção: ");
 
                 int opcao = scanner.nextInt();
-                scanner.nextLine(); 
+                scanner.nextLine();
 
                 switch (opcao) {
                     case 1 -> fazerPedido(scanner);
-                    case 2 -> retirarPedido(scanner);
+                    case 2 -> processarPedido(scanner);
                     case 3 -> exibirBalanco();
                     case 4 -> {
                         executando = false;
@@ -67,39 +69,54 @@ public class Main {
         try {
             System.out.print("\nNome do Cliente: ");
             String nomeCliente = scanner.nextLine();
-
-            System.out.println("\nEscolha o tamanho do Ramen:");
-            System.out.println("1. Pequeno (R$ 9,90)");
-            System.out.println("2. Médio (R$ 12,90)");
-            System.out.println("3. Grande (R$ 15,90)");
-            int opcaoTamanho = scanner.nextInt();
-            scanner.nextLine(); 
-
             String tamanhoEscolhido = "";
-            switch (opcaoTamanho) {
-                case 1 -> tamanhoEscolhido = "Pequeno";
-                case 2 -> tamanhoEscolhido = "Medio";
-                case 3 -> tamanhoEscolhido = "Grande";
-                default -> System.out.println("Opção de tamanho inválida.");
+            while (tamanhoEscolhido.isEmpty()) {
+                System.out.println("\nEscolha o tamanho do Ramen:");
+                System.out.println("1. Pequeno (R$ 9,90)");
+                System.out.println("2. Médio (R$ 12,90)");
+                System.out.println("3. Grande (R$ 15,90)");
+
+                try {
+                    int opcaoTamanho = scanner.nextInt();
+                    scanner.nextLine(); 
+
+                    switch (opcaoTamanho) {
+                        case 1 -> tamanhoEscolhido = "Pequeno";
+                        case 2 -> tamanhoEscolhido = "Medio";
+                        case 3 -> tamanhoEscolhido = "Grande";
+                        default -> System.out.println("Opção de tamanho inválida. Tente novamente.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Entrada inválida. Por favor, digite um número correspondente ao tamanho.");
+                    scanner.nextLine(); 
+                }
             }
 
-            System.out.println("\nEscolha a proteína:");
-            System.out.println("1. Vegano (+ R$ 3,90)");
-            System.out.println("2. Boi (+ R$ 7,90)");
-            System.out.println("3. Porco (+ R$ 5,90)");
-            int opcaoProteina = scanner.nextInt();
-            scanner.nextLine(); 
 
             String proteinaEscolhida = "";
-            switch (opcaoProteina) {
-                case 1 -> proteinaEscolhida = "Vegano";
-                case 2 -> proteinaEscolhida = "Boi";
-                case 3 -> proteinaEscolhida = "Porco";
-                default -> System.out.println("Opção de proteína inválida.");
+            while (proteinaEscolhida.isEmpty()) {
+                System.out.println("\nEscolha a proteína:");
+                System.out.println("1. Vegano (+ R$ 3,90)");
+                System.out.println("2. Boi (+ R$ 7,90)");
+                System.out.println("3. Porco (+ R$ 5,90)");
+
+                try {
+                    int opcaoProteina = scanner.nextInt();
+                    scanner.nextLine(); 
+
+                    switch (opcaoProteina) {
+                        case 1 -> proteinaEscolhida = "Vegano";
+                        case 2 -> proteinaEscolhida = "Boi";
+                        case 3 -> proteinaEscolhida = "Porco";
+                        default -> System.out.println("Opção de proteína inválida. Tente novamente.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Entrada inválida. Por favor, digite um número correspondente à proteína.");
+                    scanner.nextLine(); 
+                }
             }
 
             List<Integer> opcoesSelecionadas = new ArrayList<>();
-    
             System.out.println("\nEscolha os acréscimos (Digite 7 para finalizar):");
             boolean continuarAcrescimos = true;
             while (continuarAcrescimos) {
@@ -110,9 +127,11 @@ public class Main {
                 System.out.println("5. Shitake (+ R$ 6,90)");
                 System.out.println("6. Tofu (+ R$ 2,70)");
                 System.out.println("7. Finalizar Acréscimos");
+
                 try {
                     int opcao = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
+
                     if (opcao == 7) {
                         continuarAcrescimos = false;
                     } else if (opcao >= 1 && opcao <= 6) {
@@ -121,11 +140,10 @@ public class Main {
                         System.out.println("Opção inválida. Tente novamente.");
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Entrada inválida. Tente novamente.");
+                    System.out.println("Entrada inválida. Por favor, digite um número correspondente ao acréscimo.");
                     scanner.nextLine(); 
                 }
             }
-
 
             System.out.println("\nEscolha as bebidas (Digite 4 para finalizar):");
             boolean continuarBebidas = true;
@@ -134,9 +152,11 @@ public class Main {
                 System.out.println("2. Chá Oolong (R$ 3,90)");
                 System.out.println("3. Chá Preto (R$ 0,00)");
                 System.out.println("4. Finalizar Bebidas");
+
                 try {
                     int opcao = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
+
                     if (opcao == 4) {
                         continuarBebidas = false;
                     } else if (opcao >= 1 && opcao <= 3) {
@@ -145,8 +165,8 @@ public class Main {
                         System.out.println("Opção inválida. Tente novamente.");
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Entrada inválida. Tente novamente.");
-                    scanner.nextLine(); 
+                    System.out.println("Entrada inválida. Por favor, digite um número correspondente à bebida.");
+                    scanner.nextLine();
                 }
             }
 
@@ -160,17 +180,15 @@ public class Main {
 
         } catch (RamenShopException e) {
             System.out.println("\nErro ao processar a operação: " + e.getMessage());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("\nErro inesperado: " + e.getMessage());
         }
     }
 
-    public void retirarPedido(Scanner scanner) {
+    public void processarPedido(Scanner scanner) {
         try {
-            System.out.print("Digite o número do pedido para retirar: ");
-            String numeroPedidoStr = scanner.nextLine();
-
-            String mensagem = ramenController.retirarPedidoCozinha(numeroPedidoStr);
+            System.out.println("Processando pedido...");
+            String mensagem = ramenController.processarPedido();
             System.out.println(mensagem);
         } catch (IllegalArgumentException e) {
             System.out.println("\nErro: Entrada inválida. O número do pedido deve ser numérico.");
@@ -188,5 +206,4 @@ public class Main {
             System.out.println("\nErro ao exibir o balanço: " + e.getMessage());
         }
     }
-
 }

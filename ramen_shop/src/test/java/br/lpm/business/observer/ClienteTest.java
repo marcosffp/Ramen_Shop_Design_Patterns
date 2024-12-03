@@ -14,10 +14,10 @@ import br.lpm.business.model.enums.Tamanho;
 import br.lpm.business.pedidos.PedidoMedio;
 import br.lpm.business.util.GeradorIdPedido;
 
-public class ClienteObserverTest {
+public class ClienteTest {
 
   private Subject subject;
-  private ClienteObserver clienteObserver;
+  private Cliente clienteObserver;
   private Pedido pedido;
 
   @BeforeEach
@@ -25,7 +25,7 @@ public class ClienteObserverTest {
     GeradorIdPedido.reset();
     subject = new Cozinha();
     pedido =  new PedidoMedio("Marcos", Tamanho.PEQUENO, Proteina.BOI);
-    clienteObserver = new ClienteObserver(subject, "Marcos");
+    clienteObserver = new Cliente(subject, "Marcos");
     subject.registrarObservador(clienteObserver);
   }
 
@@ -42,14 +42,14 @@ public class ClienteObserverTest {
 
   @Test
   void testNotificarComOutroCliente() throws RamenShopException {
-    ClienteObserver outroClienteObserver = new ClienteObserver(subject, "Ana");
+    Cliente outroClienteObserver = new Cliente(subject, "Ana");
     subject.registrarObservador(outroClienteObserver); 
 
     Pedido novoPedido = new PedidoMedio("Marcos", Tamanho.PEQUENO, Proteina.BOI);
     novoPedido.setStatusPedido(Status.EM_PREPARO);
     subject.setPedidoPronto(novoPedido); 
 
-    String mensagemEsperadaAna = "Notificação para o cliente Ana: Seu pedido com o número 2 está pronto!";
+    String mensagemEsperadaAna = "Notificação para o cliente Marcos: Seu pedido com o número 2 está pronto!";
     String mensagemRecebidaAna = outroClienteObserver.notificar();
 
     assertEquals(mensagemEsperadaAna, mensagemRecebidaAna,

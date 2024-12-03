@@ -6,7 +6,7 @@ import br.lpm.business.balanco.Balanco;
 import br.lpm.business.decorators.*;
 import br.lpm.business.exception.RamenShopException;
 import br.lpm.business.model.Pedido;
-import br.lpm.business.observer.ClienteObserver;
+import br.lpm.business.observer.Cliente;
 import br.lpm.business.observer.Observer;
 import br.lpm.business.observer.Subject;
 import br.lpm.business.pedidos.ListaPedidos;
@@ -78,8 +78,7 @@ public class RamenShopController {
   }
 
   private void registrarCliente(String nomeCliente) throws RamenShopException {
-    cliente = new ClienteObserver(cozinha, nomeCliente);
-    cozinha.registrarObservador(cliente);
+    cliente = new Cliente(cozinha, nomeCliente);
   }
 
   public String obterInformacoesPedido(Pedido pedidoPronto) {
@@ -93,9 +92,8 @@ public class RamenShopController {
         "\nDetalhes do Pedido: " + pedidoPronto.exibirDetalhes();
   }
 
-  public String retirarPedidoCozinha(String numeroPedidoStr) throws RamenShopException {
-    int numeroPedido = Integer.parseInt(numeroPedidoStr);
-    Pedido pedido = listaPedidos.retirarPedido(numeroPedido);
+  public String processarPedido() throws RamenShopException {
+    Pedido pedido = listaPedidos.proximoPedido();
     cozinha.setPedidoPronto(pedido);
     String notificacao = cliente.notificar();
     pedido = cozinha.retirarPedidoPronto();
@@ -105,9 +103,5 @@ public class RamenShopController {
 
   public String obterBalanco() throws RamenShopException {
     return balanco.exibirBalanco();
-  }
-
-  public Pedido getPedido(int numeroPedido) throws RamenShopException {
-    return listaPedidos.getPedido(numeroPedido);
   }
 }
