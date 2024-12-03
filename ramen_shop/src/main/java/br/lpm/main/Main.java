@@ -8,6 +8,7 @@ import br.lpm.business.observer.Cozinha;
 import br.lpm.business.observer.Subject;
 import br.lpm.business.pedidos.ListaPedidos;
 import br.lpm.business.pedidos.PedidoFactory;
+import br.lpm.business.util.GeradorIdPedido;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -23,10 +24,15 @@ public class Main {
             cozinha);
 
     public static void main(String[] args) {
-        ListaPedidos.getInstance().removerTodosPedidos();
-        Balanco.getInstance().removerTodosPedidosConcluidos();
+        preparandoAmbiente();
         Main main = new Main();
         main.exibirMenuPrincipal();
+    }
+
+    public static void preparandoAmbiente() {
+        ListaPedidos.getInstance().removerTodosPedidos();
+        Balanco.getInstance().removerTodosPedidosConcluidos();
+        GeradorIdPedido.reset();
     }
 
     public void exibirMenuPrincipal() {
@@ -57,7 +63,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\nEntrada inválida. Por favor, digite um número válido.");
-                scanner.nextLine(); 
+                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("\nErro inesperado: " + e.getMessage());
             }
@@ -78,7 +84,7 @@ public class Main {
 
                 try {
                     int opcaoTamanho = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
 
                     switch (opcaoTamanho) {
                         case 1 -> tamanhoEscolhido = "Pequeno";
@@ -88,10 +94,9 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada inválida. Por favor, digite um número correspondente ao tamanho.");
-                    scanner.nextLine(); 
+                    scanner.nextLine();
                 }
             }
-
 
             String proteinaEscolhida = "";
             while (proteinaEscolhida.isEmpty()) {
@@ -102,7 +107,7 @@ public class Main {
 
                 try {
                     int opcaoProteina = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
 
                     switch (opcaoProteina) {
                         case 1 -> proteinaEscolhida = "Vegano";
@@ -112,7 +117,7 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada inválida. Por favor, digite um número correspondente à proteína.");
-                    scanner.nextLine(); 
+                    scanner.nextLine();
                 }
             }
 
@@ -141,7 +146,7 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Entrada inválida. Por favor, digite um número correspondente ao acréscimo.");
-                    scanner.nextLine(); 
+                    scanner.nextLine();
                 }
             }
 

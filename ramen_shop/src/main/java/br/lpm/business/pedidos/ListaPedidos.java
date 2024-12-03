@@ -48,7 +48,7 @@ public class ListaPedidos {
     return pedidos.size();
   }
 
-  public synchronized void removerTodosPedidos() {
+  public void removerTodosPedidos() {
     pedidos.clear();
   }
 }

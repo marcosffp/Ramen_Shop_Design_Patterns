@@ -8,7 +8,6 @@ import br.lpm.business.model.enums.Proteina;
 import br.lpm.business.model.enums.Status;
 import br.lpm.business.model.enums.Tamanho;
 import br.lpm.business.pedidos.PedidoMedio;
-import br.lpm.business.util.GeradorIdPedido;
 import br.lpm.business.exception.RamenShopException;
 
 public class CozinhaTest {
@@ -19,7 +18,6 @@ public class CozinhaTest {
 
   @BeforeEach
   void setUp() throws RamenShopException {
-    GeradorIdPedido.reset();
     cozinha = new Cozinha();
     pedido = new PedidoMedio("Marcos", Tamanho.PEQUENO, Proteina.BOI);
     clienteObserver = new Cliente(cozinha, "Marcos");

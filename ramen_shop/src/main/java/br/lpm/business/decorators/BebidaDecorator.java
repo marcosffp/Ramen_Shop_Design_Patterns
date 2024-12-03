@@ -6,7 +6,7 @@ public abstract class BebidaDecorator extends Pedido {
   private final Pedido pedido;
 
   public BebidaDecorator(Pedido pedido) {
-    super(pedido.getNomeCliente(), pedido.getTamanhoPedido(), pedido.getProteinaPedido());
+    super(pedido.getNomeCliente(), pedido.getTamanhoPedido(), pedido.getProteinaPedido(),pedido.getNumeroPedido());
     this.pedido = pedido;
   }
 

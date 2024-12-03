@@ -28,7 +28,9 @@ public class RamenShopControllerTest {
   void setUp() throws RamenShopException {
     GeradorIdPedido.reset();
     listaPedidos = ListaPedidos.getInstance();
+    listaPedidos.removerTodosPedidos();
     balanco = Balanco.getInstance();
+    balanco.removerTodosPedidosConcluidos();
     cozinha = new Cozinha();
     ramenFactory = new PedidoFactory();
     ramenController = new RamenShopController(listaPedidos, balanco, ramenFactory, cozinha);
@@ -69,12 +71,12 @@ public class RamenShopControllerTest {
 
   @Test
   void testObterBalanco() throws RamenShopException {
+    ramenController.processarPedido();
     String balancoAtual = ramenController.obterBalanco();
     assertNotNull(balancoAtual, "Testando se o balanço não é nulo");
     assertTrue(balancoAtual.contains("Receita Total: R$"),
         "Testando se o balanço contém a receita total");
     assertTrue(balancoAtual.contains("Ticket Médio: R$"), "Testando se o balanço contém o ticket médio");
-
   }
 
   @Test
@@ -87,6 +89,8 @@ public class RamenShopControllerTest {
         "Testando se as informações do pedido contêm o nome do cliente");
     assertTrue(informacoesPedido.contains("Preço Total: R$"),
         "Testando se as informações do pedido contêm o preço total");
+    
+        
   }
 
   @Test

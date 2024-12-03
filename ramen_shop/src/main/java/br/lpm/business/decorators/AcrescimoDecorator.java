@@ -7,7 +7,7 @@ public abstract class AcrescimoDecorator extends Pedido {
   private final Pedido pedido;
 
   public AcrescimoDecorator(Pedido pedido) {
-    super(pedido.getNomeCliente(), pedido.getTamanhoPedido(), pedido.getProteinaPedido());
+    super(pedido.getNomeCliente(), pedido.getTamanhoPedido(), pedido.getProteinaPedido(), pedido.getNumeroPedido());
     this.pedido = pedido;
   }
 

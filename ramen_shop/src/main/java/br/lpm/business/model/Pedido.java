@@ -21,6 +21,14 @@ public abstract class Pedido {
     this.proteinaPedido = proteinaPedido;
   }
 
+  public Pedido(String nomeCliente, Tamanho tamanhoPedido, Proteina proteinaPedido, int numeroPedido) {
+    this.numeroPedido = numeroPedido;
+    this.nomeCliente = nomeCliente;
+    this.tamanhoPedido = tamanhoPedido;
+    this.statusPedido = Status.PENDENTE;
+    this.proteinaPedido = proteinaPedido;
+  }
+
 
   public void setStatusPedido(Status statusPedido) {
     this.statusPedido = statusPedido;

@@ -77,7 +77,7 @@ public class Balanco {
     return relatorio.toString();
   }
 
-  public synchronized void removerTodosPedidosConcluidos() {
+  public void removerTodosPedidosConcluidos() {
     pedidosConcluidos.clear();
   }
 

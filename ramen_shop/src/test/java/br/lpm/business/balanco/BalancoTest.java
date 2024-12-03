@@ -64,7 +64,6 @@ public class BalancoTest {
           balanco.addPedidoConcluidos(pedidoForaDaLista);
         },
         "Testando se não adicionou um pedido com status inválido na lista de pedidos concluídos");
-
   }
 
 
@@ -82,5 +81,6 @@ public class BalancoTest {
 
     String balancoRecebido = balanco.exibirBalanco();
     assertEquals(balancoEsperado, balancoRecebido, "Testando se o balanço está correto");
+
   }
 }
